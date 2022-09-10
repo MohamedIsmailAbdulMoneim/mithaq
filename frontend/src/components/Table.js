@@ -1,7 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
-import { Grid } from '@mui/material';
+import { Fab, Grid, Icon } from '@mui/material';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { Link } from 'react-router-dom';
+import AddIcon from '@mui/icons-material/Add';
+
 
 
 // const rows = [
@@ -9,22 +13,35 @@ import { Grid } from '@mui/material';
 
 // ];
 
-export default function Table({columns, data}) {
+export default function Table({ columns, data }) {
+    console.log(data);
     return (
-        <Grid dir="rtl" container >
-            <Grid item lg={8}  style={{margin: '100px auto'}}>
-                <Box sx={{ height: '500px',   backgroundColor: '#efe4e6' }}>
-                    <DataGrid
-                        rows={data}   
-                        columns={columns}
-                        pageSize={20}
-                        rowsPerPageOptions={[20]}
-                        checkboxSelection
-                        disableSelectionOnClick
-                        experimentalFeatures={{ newEditingApi: true }}
-                    />
-                </Box>
+        <>
+            <Grid dir="rtl" container >
+
+                <Grid item lg={8} xs={12} style={{ margin: '100px auto' }}>
+                    <Box sx={{ height: '500px', backgroundColor: '#efe4e6', boxShadow: "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" }}>
+                        <DataGrid
+                            rows={data}
+                            columns={columns}
+                            pageSize={20}
+                            rowsPerPageOptions={[20]}
+                            checkboxSelection
+                            disableSelectionOnClick
+                            experimentalFeatures={{ newEditingApi: true }}
+                        />
+                    </Box>
+                    <Link to="/form">
+                        {/* <Icon style={{ position: 'relative', left: '47.8%', bottom: '7%', width: 50, height: 50 }} color="primary">
+                        <AddCircleIcon style={{ fontSize: 30 }} />
+                    </Icon> */}
+                    
+                        <Fab style={{ position: 'relative', left: '47%', bottom: '9%', width: 45, height: 45 }} color="primary" aria-label="add">
+                            <AddIcon />
+                        </Fab>
+                    </Link>
+                </Grid>
             </Grid>
-        </Grid>
+        </>
     );
 }

@@ -19,6 +19,7 @@ import logo from '../logo.jpg'
 import { create } from 'jss';
 import rtl from 'jss-rtl';
 import { StylesProvider, jssPreset } from '@mui/styles';
+import { Link } from 'react-router-dom';
 
 // Configure JSS
 const jss = create({
@@ -191,7 +192,7 @@ export default function PrimarySearchAppBar() {
               component="div"
               sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-              <img src={logo} alt="logo" style={{ width: 80, height: 60 }} />
+              <Link to='/'><img src={logo} alt="logo" style={{ width: 80, height: 60 }} /></Link>
             </Typography>
             <Search >
               <SearchIconWrapper>
