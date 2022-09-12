@@ -18,31 +18,20 @@ const ColorButton = styled(Button)(({ theme }) => ({
 let idNum = 1
 
 
-const Edit = ({ inputs, data }) => {
+const Edit = ({ inputs, data, additions, status }) => {
   const { id } = useParams()
-
   const [memberDetails] = data.filter(x => x.id === parseInt(id))
+  const arrOfNums = memberDetails?.phoneNumbers?.split(',,') || []
+  arrOfNums[arrOfNums.length-1] = arrOfNums[arrOfNums.length-1]?.substr(0, arrOfNums[arrOfNums.length-1].length - 1)
 
   const [editData, setEditData] = useState(memberDetails)
-  const [phoneNums, setPhoneNums] = useState({})
+  const [phoneNums, setPhoneNums] = useState(arrOfNums.map(x => JSON.parse(x)))
+  const [newPhones, setNewPhones] = useState({})
   const [open, setOpen] = useState(false);
   const [msg, setMsg] = useState('')
   const [severity, setSeverity] = useState('')
   const [phoneInputs, setPhoneInputs] = useState([])
-
-
-  const obj = inputs.reduce((p, c) => {
-    if (memberDetails[c.field]) {
-      p.push({ ...c, value: memberDetails[c.field] })
-      return p
-    } else {
-      p.push(c)
-      return p
-    }
-  }, [])
-
-  console.log(editData);
-
+  
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -53,18 +42,28 @@ const Edit = ({ inputs, data }) => {
   };
 
   const handlePhoneInput = () => {
-
-    const input = <Grid item lg="12" xs="12"><TextField onChange={handleChange} name={`phoneNumber_${++idNum}`} label={'رقم التليفون'} variant="standard" fullWidth /></Grid>
-
+    const input = <Grid item lg="12" xs="12"><TextField onChange={handleNewPhones} name={`phoneNumber_${++idNum}`} label={'رقم التليفون'} variant="standard" fullWidth /></Grid>
     setPhoneInputs(old => [...old, input])
+  }
+
+  const handleNewPhones = (e) => {
+    setNewPhones(old => ({
+      ...old,
+      [e.target.name]: e.target.value
+    }))
   }
 
   const handleChange = (e) => {
     if (e.target.name.includes('phoneNumber')) {
-      setPhoneNums(old => ({
-        ...old,
-        [e.target.name]: e.target.value
-      }))
+      setPhoneNums(old => {
+        return old.map(x => {
+          if(x.id === e.target.id) {
+            x.phoneNumber = e.target.value
+            return x
+          }
+          else return x
+        })
+      })
     } else {
       setEditData(old => ({
         ...old,
@@ -78,8 +77,8 @@ const Edit = ({ inputs, data }) => {
     setOpen(true);
     axios({
       method: "POST",
-      data: editData,
-      url: `http://localhost:5000/addrecord`,
+      data: editData, phoneNums, newPhones,
+      url: `http://localhost:5000/editrecord`,
       headers: { "Content-Type": "application/json" },
     }).then(data => {
       if (data.data.msg === 'تم إدخال البيانات من قبل') {
@@ -96,25 +95,31 @@ const Edit = ({ inputs, data }) => {
   }
   return (
     <Box sx={{ margin: '80px auto 0 auto', backgroundColor: '#ede0e0', width: '50%', minWidth: '450px', padding: '10px', boxShadow: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;' }}>
-      <Grid container sx={{ padding: '0 90px' }} spacing={2}>
-        {obj.map(x => (
-          x.field === 'phoneNumber' ?
-            x.value.map(a => (
-              <Grid item lg='12'>
-              <TextField value={a || ''} type="number" onChange={handleChange} name={x.field} id="standard-basic" label={x.headerName} variant="standard" margin="normal" fullWidth />
+      <Grid container sx={{ padding: '0 90px' }} spacing={1}>
+        {inputs.map(x => (
+          x.field === 'notes' ?
+            <Grid item lg='12'>
+              <TextField value={editData[x.field] || ''} type="number" onChange={handleChange} name={x.field} id="standard-basic" label={x.headerName} variant="standard" margin="normal" fullWidth />
             </Grid>
-            ))
             :
-            <Grid item lg="6">
-              {x.field === 'contract_date' || x.field === 'data_register_date' ?
-                <TextField value={editData[x.field] || ''} type='date' InputLabelProps={{ shrink: true, required: true }} onChange={handleChange} name={x.field} id="standard-basic" label={x.headerName} variant="standard" margin="normal" fullWidth />
-                :
-                x.field === 'moakhar' || x.field === 'cost' ?
-                  <TextField value={editData[x.field] || ''} type="number" onChange={handleChange} name={x.field} id="standard-basic" label={x.headerName} variant="standard" margin="normal" fullWidth />
+            x.field === 'phoneNumber' ?
+            phoneNums?.map(a => (
+                <Grid item lg='12'>
+                  <TextField value={a.phoneNumber || ''} id={a.id} type="number" onChange={handleChange} name={x.field} x label={x.headerName} variant="standard" margin="normal" fullWidth />
+                </Grid>
+              ))
+
+              :
+              <Grid item lg="6">
+                {x.field === 'contract_date' || x.field === 'data_register_date' ?
+                  <TextField value={editData[x.field] || ''} type='date' InputLabelProps={{ shrink: true, required: true }} onChange={handleChange} name={x.field} id="standard-basic" label={x.headerName} variant="standard" margin="normal" fullWidth />
                   :
-                  <TextField value={editData[x.field] || ''} onChange={handleChange} name={x.field} id="standard-basic" label={x.headerName} variant="standard" margin="normal" fullWidth />
-              }
-            </Grid>
+                  x.field === 'moakhar' || x.field === 'cost' ?
+                    <TextField value={editData[x.field] || ''} type="number" onChange={handleChange} name={x.field} id="standard-basic" label={x.headerName} variant="standard" margin="normal" fullWidth />
+                    :
+                    <TextField value={editData[x.field] || ''} onChange={handleChange} name={x.field} id="standard-basic" label={x.headerName} variant="standard" margin="normal" fullWidth />
+                }
+              </Grid>
         ))}
         {phoneInputs}
       </Grid>

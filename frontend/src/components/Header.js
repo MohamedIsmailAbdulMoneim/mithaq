@@ -174,7 +174,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <RTL>
-      <Box dir="rtl" sx={{ flexGrow: 1, marginBottom: 20 }}>
+      <Box dir="rtl" sx={{ flexGrow: 1, marginBottom: 12 }}>
         <AppBar position="fixed" sx={{ backgroundColor: '#310109' }}>
           <Toolbar>
             <IconButton
@@ -192,7 +192,7 @@ export default function PrimarySearchAppBar() {
               component="div"
               sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-              <Link to='/'><img src={logo} alt="logo" style={{ width: 80, height: 60 }} /></Link>
+              <Link to='/'><img src={logo} alt="logo" style={{ width: 50, height: 50 }} /></Link>
             </Typography>
             <Search >
               <SearchIconWrapper>

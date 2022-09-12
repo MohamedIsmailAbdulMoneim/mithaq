@@ -64,6 +64,10 @@ export const inputsData = [
     {
         field: 'phoneNumber',
         headerName: 'رقم التليفون',
+    },
+    {
+        field: 'notes',
+        headerName: 'ملاحظات',
     }
 ];
 

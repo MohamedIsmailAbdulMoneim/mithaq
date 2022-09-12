@@ -19,35 +19,33 @@ import Edit from './components/Edit';
 
 function App() {
   const [data, setData] = useState([])
+
+  const status = [
+    { id: 1, title: 'تحت المتابعة' },
+    { id: 2, title: 'في انتظار الأوراق' },
+    { id: 3, title: 'تم الحجز' },
+    { id: 4, title: 'تحت التنفيذ' },
+    { id: 5, title: 'تم العقد' },
+    { id: 6, title: 'استلم الوثيقة' },
+    { id: 7, title: 'إلغاء' }
+  ]
+  const additions = [
+    { id: 1, title: 'وثيقة مؤقتة' },
+    { id: 2, title: 'منديل كتب الكتاب' },
+    { id: 3, title: 'شهادة صحية' }
+  ]
   useEffect(() => {
     let isApiSubscribed = true;
     const getAllRecords = async () => {
       axios.get(`http://${process.env.REACT_APP_URL}/getallrecords`).then((data) => {
         if (isApiSubscribed) {
-          let finalData = []
-          const details = data.data.data
-          const arrOfPhoneNumber = []
-          const phoneNumberPerPerson = details[1].reduce((p,c) => {
-            if(p.main_id === c.main_id){
-              arrOfPhoneNumber.push({id: p.main_id, phoneNumber: [p.phone_number, c.phone_number]})
-              return arrOfPhoneNumber;
-            }else{
-              arrOfPhoneNumber.push(p)
-              return arrOfPhoneNumber
-            }
-          })
-
-          for(let i = 0; i < details[0].length; i++){
-            for(let x = 0; x < phoneNumberPerPerson.length; x ++){
-              if(details[0][i].id === phoneNumberPerPerson[x].id) finalData.push({...details[0][i], phoneNumber: phoneNumberPerPerson[x].phoneNumber, main_id: details[1][x].main_id})
-              else finalData.push({...details[0][i]})
-            }
-          }
-          setData(finalData)
+          setData(data.data.data)
         }
       })
     }
+
     getAllRecords()
+
 
     return () => {
       isApiSubscribed = false;
@@ -59,12 +57,16 @@ function App() {
 
       <div className="App">
         <Header />
-        {data.length > 0 && <Routes>
+        <Routes>
           <Route base path='/' element={<Table columns={columns} data={data} />} />
-          <Route path='/form' element={<Form inputs={inputsData} />} />
-          <Route path='/seemore/:id' element={<SeeMore inputs={inputsData} data={data} />} />
-          <Route path='/edit/:id' element={<Edit inputs={inputsData} data={data} />} />
-        </Routes>}
+          <Route path='/form' element={<Form inputs={inputsData} status={status} additions={additions} />} />
+          {data.length > 0 &&
+            <>
+              <Route path='/seemore/:id' element={<SeeMore inputs={inputsData} data={data} />} />
+              <Route path='/edit/:id' element={<Edit inputs={inputsData} data={data} status={status} additions={additions} />} />
+            </>
+          }
+        </Routes>
       </div>
 
     </BrowserRouter>

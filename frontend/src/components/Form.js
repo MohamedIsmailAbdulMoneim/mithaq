@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Grid, TextField } from '@mui/material'
+import { Autocomplete, Grid, TextField } from '@mui/material'
 import Button from "@mui/material/Button";
 import { Box } from '@mui/system'
 import axios from 'axios'
@@ -18,7 +18,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 let idNum = 1
 
 
-const Form = ({ inputs }) => {
+const Form = ({ inputs, additions, status }) => {
 
   const [newData, setNewData] = useState({})
   const [phoneNums, setPhoneNums] = useState({})
@@ -26,6 +26,16 @@ const Form = ({ inputs }) => {
   const [msg, setMsg] = useState('')
   const [severity, setSeverity] = useState('')
   const [phoneInputs, setPhoneInputs] = useState([])
+
+  const defaultPropsForStatus = {
+    options: status,
+    getOptionLabel: (option) => option.title,
+  };
+
+  const defaultPropsForAddition = {
+    options: additions,
+    getOptionLabel: (option) => option.title,
+  };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -36,7 +46,7 @@ const Form = ({ inputs }) => {
   };
 
   const handlePhoneInput = () => {
-    
+
     const input = <Grid item lg="12" xs="12"><TextField onChange={handleChange} name={`phoneNumber_${++idNum}`} label={'رقم التليفون'} variant="standard" fullWidth /></Grid>
 
     setPhoneInputs(old => [...old, input])
@@ -79,7 +89,7 @@ const Form = ({ inputs }) => {
         setMsg('تم إدخال البيانات من قبل')
         setSeverity('error')
       }
-      
+
     })
 
   }
@@ -97,7 +107,24 @@ const Form = ({ inputs }) => {
                 x.field === 'moakhar' || x.field === 'cost' ?
                   <TextField value={newData[x.field] || ''} type="number" onChange={handleChange} name={x.field} id="standard-basic" label={x.headerName} variant="standard" margin="normal" fullWidth />
                   :
-                  <TextField value={newData[x.field] || ''} onChange={handleChange} name={x.field} id="standard-basic" label={x.headerName} variant="standard" margin="normal" fullWidth />
+                  x.field === 'status' ?
+                    <Autocomplete
+                      {...defaultPropsForStatus}
+                      id="clear-on-escape"
+                      clearOnEscape
+                      renderInput={(params) => (
+                        <TextField {...params} name={x.field} label={x.headerName} id="standard-basic" variant="standard" margin="normal" style={{ marginTop: 16 }} fullWidth />
+                      )}
+                    /> : x.field === 'Additions' ? <Autocomplete
+                      {...defaultPropsForAddition}
+                      id="clear-on-escape"
+                      clearOnEscape
+                      renderInput={(params) => (
+                        <TextField {...params} name={x.field} label={x.headerName} id="standard-basic" variant="standard" margin="normal" style={{ marginTop: 16 }} fullWidth />
+                      )}
+                    /> :
+
+                      <TextField value={newData[x.field] || ''} onChange={handleChange} name={x.field} id="standard-basic" label={x.headerName} variant="standard" margin="normal" fullWidth />
               }
             </Grid>
         ))}

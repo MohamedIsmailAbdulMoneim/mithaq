@@ -15,54 +15,51 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 const SeeMore = ({ inputs, data }) => {
-
   const { id } = useParams()
-
   const [memberDetails] = data.filter(x => x.id === parseInt(id))
-
-  const obj = inputs.reduce((p, c) => {
-
-    if (memberDetails[c.field]) {
-      p.push({ ...c, value: memberDetails[c.field] })
-      return p
-    } else {
-      p.push(c)
-      return p
-    }
-  }, [])
-
-  console.log(obj);
-
-
+  const arrOfNums = memberDetails.phoneNumbers?.split(',,') || []
+    arrOfNums[arrOfNums?.length -1] = arrOfNums[arrOfNums.length-1]?.substr(0, arrOfNums[arrOfNums.length-1].length - 1)
+  .map(x => JSON.parse(x))
+  
   return (
-    <Box sx={{ width: 950, height: 720, margin: '0 auto', backgroundColor: '#efe4e6', boxShadow: 'rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;' }}>
-
+    <Box sx={{ width: 950,  margin: '0 auto', backgroundColor: '#efe4e6', boxShadow: 'rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;' }}>
       <Grid container sx={{ padding: '0 90px' }} spacing={2}>
-        {obj.map(x => (
+        {inputs.map(x => (
           x.field === 'phoneNumber' ?
-            x.value.map(a => (
+          arrOfNums.map(x => JSON.parse(x))?.map(a => (
               <Grid item lg="12">
                 <TextField
                   aria-readonly
-                  value={a}
+                  value={a.phoneNumber}
+                  fullWidth
+                  label={x.headerName}
+                  id={a.id}
+                />
+              </Grid>
+            ))
+            :
+            x.field === 'notes' ?
+              <Grid item lg="12">
+                <TextField
+                  aria-readonly
+                  value={memberDetails[x.field]}
                   fullWidth
                   label={x.headerName}
                   id="fullWidth"
                 />
               </Grid>
-            ))
-            :
-            <Grid item lg="6">
-              <TextField
-                aria-readonly
-                value={x.value || ''}
-                fullWidth
-                label={x.headerName}
-                id="fullWidth"
-              />
-            </Grid>
+              :
+              <Grid item lg="6">
+                <TextField
+                  aria-readonly
+                  value={memberDetails[x.field]}
+                  fullWidth
+                  label={x.headerName}
+                  id="fullWidth"
+                />
+              </Grid>
         ))}
-        <Grid item lg="12">
+        <Grid item lg="12" style={{marginBottom: 10}}>
           <ColorButton fullWidth variant="contained"><Link style={{ color: 'white' }} to={`/edit/${id}`}>تعديل البيانات</Link></ColorButton>
         </Grid>
       </Grid>
