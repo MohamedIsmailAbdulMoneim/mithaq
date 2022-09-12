@@ -5,6 +5,11 @@ const session = require('express-session');
 const db = require("./database/connection")
 const path = require('path')
 require('dotenv').config();
+var queues = require('mysql-queues');
+const DEBUG = true;
+queues(db, DEBUG);
+
+
 app.use(session({
     key: 'session_cookie_name',
     secret: 'session_cookie_secret',
@@ -30,7 +35,6 @@ const getAllRecords = (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            console.log(details);
             res.json({ data: details });
         }
     })
@@ -39,12 +43,12 @@ const getAllRecords = (req, res) => {
 const addRecord = (req, res) => {
     const { newData, phoneNums } = req.body
     const reAranged = Object.values(phoneNums).filter(x => x.length > 2)
-    
+
     Object.keys(newData).forEach(x => {
-        if(newData[x].length === 2 ){
+        if (newData[x].length === 2) {
             delete newData[x]
         }
-        if(!Number(newData[x])){
+        if (!Number(newData[x])) {
             newData[x] = `"${newData[x]}"`
         }
     })
@@ -55,55 +59,65 @@ const addRecord = (req, res) => {
     db.query(query, (err, details) => {
         if (err) {
             console.log(err);
-            
+
         } else {
-            console.log(details.insertId);
-            // console.log(reAranged.map(x => [1, x]));
-            db.query('insert into phones (phone_number, main_id) values ?;', [reAranged.map(x => [x, details.insertId])], (err,data)=> {
-                console.log('hit');
-                if(err) {
+            db.query('insert into phones (phone_number, main_id) values ?;', [reAranged.map(x => [x, details.insertId])], (err, data) => {
+                if (err) {
                     console.log(err);
                     if (err.sqlMessage.indexOf("Duplicate entry") !== -1) {
                         res.json({ data: [[], []], msg: "تم إدخال البيانات من قبل" })
-                    }else {
-                        console.log('done');
+                    } else {
                         res.json({ data, msg: "تم إدخال البيانات بنجاح" });
                     }
                 }
             })
-            
+
         }
     })
 }
 
 const editRecord = (req, res) => {
-    console.log(req.body);
-    // const query = `insert into main (${Object.keys(req.body)}) VALUES (${Object.values(req.body)});`
-    // db.query(query, (err, details) => {
-    //     if (err) {
-    //         console.log(err);
-    //         if (err.sqlMessage.indexOf("Duplicate entry") !== -1) {
-    //             res.json({ data: [[], []], msg: "تم إدخال البيانات من قبل" })
-    //         }
-    //     } else {
-    //         console.log('done');
-    //         res.json({ data: details, msg: "تم إدخال البيانات بنجاح" });
-    //     }
-    // })
-    // const object = {
-    //     id: 1,
-    //     firstName: "John",
-    //     lastName: "Doe"
-    // };
-    
-    // const columns = Object.keys(object);
-    // const values = Object.values(object);
-    
-    // let sql = "UPDATE tableName SET '" + columns.join("' = ? ,'") +"' = ?";
-    
-    // connection.query(sql, values, (error, result, fields) => {
-    //     //do what you must here.
-    // });
+    const { filteredNullData, phoneNums, newPhones } = req.body
+    const {id} = filteredNullData
+    const reAranged = phoneNums.filter(x => x.phoneNumber.length > 2)
+    delete filteredNullData.phoneNumbers
+    delete filteredNullData.id
+
+    Object.keys(filteredNullData).forEach(x => {
+        if (!Number(filteredNullData[x])) {
+            filteredNullData[x] = `"${filteredNullData[x]}"`
+        }
+    })
+    reAranged.forEach(x => {
+        x.phoneNumber = `"${x.phoneNumber}"`
+    })
+    Object.keys(newPhones).forEach(x => {
+        if(newPhones[x].length === 0) delete newPhones[x];
+        else newPhones[x] = `"${newPhones[x]}"`
+    })
+
+
+
+
+    const dataColumns = Object.keys(filteredNullData);
+    const phonesValue = String(reAranged.map(x => `update phones set phone_number = ${x.phoneNumber} where id = ${x.id};`)).replace(',','')
+    const newPhonesValue = Object.values(newPhones);
+    var trans = db.startTransaction();
+
+    console.log(phonesValue);
+
+    if(dataColumns.length > 0) trans.query(`UPDATE main SET ${dataColumns.map((x) => `${x} = ${filteredNullData[x]}`)} where id = ${id};`);
+    if(phonesValue.length > 0) trans.query(`${phonesValue}`)
+    if(newPhonesValue.length > 0) trans.query(`insert into phones (phone_number, main_id) values ${newPhonesValue.map(x => `(${x}, ${id})`)};`);
+    trans.commit(function (err, info) {
+        // here, the queries are done
+        if(err){
+            console.log(err);
+        }else{
+            console.log(info);
+        }
+    });
+
 }
 
 

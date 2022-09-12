@@ -22,7 +22,7 @@ const Edit = ({ inputs, data, additions, status }) => {
   const { id } = useParams()
   const [memberDetails] = data.filter(x => x.id === parseInt(id))
   const arrOfNums = memberDetails?.phoneNumbers?.split(',,') || []
-  arrOfNums[arrOfNums.length-1] = arrOfNums[arrOfNums.length-1]?.substr(0, arrOfNums[arrOfNums.length-1].length - 1)
+  arrOfNums[arrOfNums.length - 1] = arrOfNums[arrOfNums.length - 1]?.substr(0, arrOfNums[arrOfNums.length - 1].length - 1)
 
   const [editData, setEditData] = useState(memberDetails)
   const [phoneNums, setPhoneNums] = useState(arrOfNums.map(x => JSON.parse(x)))
@@ -31,7 +31,7 @@ const Edit = ({ inputs, data, additions, status }) => {
   const [msg, setMsg] = useState('')
   const [severity, setSeverity] = useState('')
   const [phoneInputs, setPhoneInputs] = useState([])
-  
+
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -57,7 +57,7 @@ const Edit = ({ inputs, data, additions, status }) => {
     if (e.target.name.includes('phoneNumber')) {
       setPhoneNums(old => {
         return old.map(x => {
-          if(x.id === e.target.id) {
+          if (x.id === e.target.id) {
             x.phoneNumber = e.target.value
             return x
           }
@@ -71,13 +71,22 @@ const Edit = ({ inputs, data, additions, status }) => {
       }))
     }
   }
+  console.log(editData, phoneNums, newPhones);
 
   const handleSubmit = (e) => {
+    const filteredNullData = editData
+    Object.keys(filteredNullData).forEach(x => {
+      if (filteredNullData[x]?.length === 0 || filteredNullData[x] === null || filteredNullData[x] === 'لا توجد بيانات') {
+        delete filteredNullData[x]
+      }
+    })
+    console.log(filteredNullData);
     e.preventDefault()
     setOpen(true);
+
     axios({
       method: "POST",
-      data: editData, phoneNums, newPhones,
+      data: { filteredNullData, phoneNums, newPhones },
       url: `http://localhost:5000/editrecord`,
       headers: { "Content-Type": "application/json" },
     }).then(data => {
@@ -89,7 +98,7 @@ const Edit = ({ inputs, data, additions, status }) => {
         setSeverity('success')
 
       }
-      setEditData({})
+
     })
 
   }
@@ -103,7 +112,7 @@ const Edit = ({ inputs, data, additions, status }) => {
             </Grid>
             :
             x.field === 'phoneNumber' ?
-            phoneNums?.map(a => (
+              phoneNums?.map(a => (
                 <Grid item lg='12'>
                   <TextField value={a.phoneNumber || ''} id={a.id} type="number" onChange={handleChange} name={x.field} x label={x.headerName} variant="standard" margin="normal" fullWidth />
                 </Grid>

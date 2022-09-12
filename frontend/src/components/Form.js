@@ -27,6 +27,8 @@ const Form = ({ inputs, additions, status }) => {
   const [severity, setSeverity] = useState('')
   const [phoneInputs, setPhoneInputs] = useState([])
 
+  console.log(phoneNums);
+
   const defaultPropsForStatus = {
     options: status,
     getOptionLabel: (option) => option.title,
