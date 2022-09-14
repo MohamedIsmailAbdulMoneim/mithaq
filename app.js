@@ -42,6 +42,8 @@ const getAllRecords = (req, res) => {
 
 const addRecord = (req, res) => {
     const { newData, phoneNums } = req.body
+    newData.isShown = "TRUE"
+    console.log(newData);
     const reAranged = Object.values(phoneNums).filter(x => x.length > 2)
 
     Object.keys(newData).forEach(x => {
@@ -96,9 +98,6 @@ const editRecord = (req, res) => {
         else newPhones[x] = `"${newPhones[x]}"`
     })
 
-
-
-
     const dataColumns = Object.keys(filteredNullData);
     const phonesValue = String(reAranged.map(x => `update phones set phone_number = ${x.phoneNumber} where id = ${x.id};`)).replace(',','')
     const newPhonesValue = Object.values(newPhones);
@@ -126,16 +125,16 @@ app.get('/getallrecords', getAllRecords)
 app.post('/addrecord', addRecord)
 app.post('/editrecord', editRecord)
 
-// app.use(
-//     express.static("frontend/build")
-//   );
+app.use(
+    express.static("frontend/build")
+  );
 
-// app.get("*", (req, res) => {
-//     res.sendFile(
-//         path.resolve(__dirname, 'frontend' ,'build', 'index.html')
-//     );
+app.get("*", (req, res) => {
+    res.sendFile(
+        path.resolve(__dirname, 'frontend' ,'build', 'index.html')
+    );
 
-// })
+})
 
 
 var port = process.env.PORT || 5000;
