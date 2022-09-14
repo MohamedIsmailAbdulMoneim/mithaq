@@ -87,7 +87,7 @@ const Edit = ({ inputs, data, additions, status }) => {
     axios({
       method: "POST",
       data: { filteredNullData, phoneNums, newPhones },
-      url: `http://localhost:5000/editrecord`,
+      url: `http://${process.env.REACT_APP_URL}/editrecord`,
       headers: { "Content-Type": "application/json" },
     }).then(data => {
       if (data.data.msg === 'تم إدخال البيانات من قبل') {
