@@ -21,7 +21,6 @@ export default function Table({ columns, data }) {
                 <Grid item lg={8} xs={12} sm={12} style={{ margin: '100px auto' }}>
                     <Box sx={{ height: '500px', backgroundColor: '#efe4e6', boxShadow: "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" }}>
                         <DataGrid
-                            style={{fontSize: 10}}
                             rows={data}
                             columns={columns}
                             pageSize={20}

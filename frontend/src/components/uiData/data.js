@@ -114,13 +114,6 @@ export const columns = [
             <PlayCircleFilledWhiteIcon />
         </Link>),
 
-    },
-    {
-        field: 'delete',
-        headerName: 'حذف',
-        type: 'icon',
-        width: 110,
-        renderCell: (params) => <DeleteOutlineIcon onClick={(e) => {columns.idNum = params.id}} />,
-
     }
 ];
+
