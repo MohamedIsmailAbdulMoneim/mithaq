@@ -2,7 +2,6 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import { Link } from "react-router-dom";
 
-
 export const inputsData = [
     {
         field: 'Husband_name',
@@ -71,7 +70,10 @@ export const inputsData = [
     }
 ];
 
+
+
 export const columns = [
+    {idNum: ''},
     { field: 'id', headerName: 'ID', width: 90 },
     {
         field: 'Husband_name',
@@ -118,7 +120,7 @@ export const columns = [
         headerName: 'حذف',
         type: 'icon',
         width: 110,
-        renderCell: () => <DeleteOutlineIcon />,
+        renderCell: (params) => <DeleteOutlineIcon onClick={(e) => {columns.idNum = params.id}} />,
 
     }
 ];

@@ -11,12 +11,6 @@ import { useEffect, useState } from 'react';
 import Edit from './components/Edit';
 
 
-
-
-
-
-
-
 function App() {
   const [data, setData] = useState([])
 
@@ -34,6 +28,7 @@ function App() {
     { id: 2, title: 'منديل كتب الكتاب' },
     { id: 3, title: 'شهادة صحية' }
   ]
+
   useEffect(() => {
     let isApiSubscribed = true;
     const getAllRecords = async () => {
