@@ -43,7 +43,7 @@ const getAllRecords = (req, res) => {
 const addRecord = (req, res) => {
     const { newData, phoneNums } = req.body
     newData.isShown = "TRUE"
-    console.log(newData);
+    
     const reAranged = Object.values(phoneNums).filter(x => x.length > 2)
 
     Object.keys(newData).forEach(x => {
@@ -63,16 +63,16 @@ const addRecord = (req, res) => {
             console.log(err);
 
         } else {
-            db.query('insert into phones (phone_number, main_id) values ?;', [reAranged.map(x => [x, details.insertId])], (err, data) => {
-                if (err) {
-                    console.log(err);
-                    if (err.sqlMessage.indexOf("Duplicate entry") !== -1) {
-                        res.json({ data: [[], []], msg: "تم إدخال البيانات من قبل" })
-                    } else {
-                        res.json({ data, msg: "تم إدخال البيانات بنجاح" });
-                    }
-                }
-            })
+            if(reAranged.length > 0){
+                db.query('insert into phones (phone_number, main_id) values ?;', [reAranged.map(x => [x, details.insertId])], (err, data) => {
+                    if (err) console.log(err);
+                    else res.json({ data, msg: "تم إدخال البيانات بنجاح" });   
+    
+                })   
+            }
+            if(reAranged.length === 0){
+                res.json({ details, msg: "تم إدخال البيانات بنجاح" }); 
+            }
 
         }
     })
