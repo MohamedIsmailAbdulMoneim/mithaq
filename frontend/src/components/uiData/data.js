@@ -73,8 +73,6 @@ export const inputsData = [
 
 
 export const columns = [
-    {idNum: ''},
-    { field: 'id', headerName: 'ID', width: 90 },
     {
         field: 'Husband_name',
         headerName: 'اسم الزوج',

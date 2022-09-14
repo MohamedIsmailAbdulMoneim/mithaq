@@ -23,9 +23,8 @@ export default function Table({ columns, data }) {
                         <DataGrid
                             rows={data}
                             columns={columns}
-                            pageSize={20}
+                            pageSize={100}
                             rowsPerPageOptions={[20]}
-                            checkboxSelection
                             disableSelectionOnClick
                         />
                     </Box>
