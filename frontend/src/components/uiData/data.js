@@ -73,6 +73,7 @@ export const inputsData = [
 
 
 export const columns = [
+    { field: 's', headerName: 'م', width: 30, editable: false },
     {
         field: 'Husband_name',
         headerName: 'اسم الزوج',

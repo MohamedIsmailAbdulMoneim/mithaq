@@ -13,6 +13,7 @@ import Edit from './components/Edit';
 
 function App() {
   const [data, setData] = useState([])
+  console.log(data);
 
   const status = [
     { id: 1, title: 'تحت المتابعة' },
@@ -34,7 +35,13 @@ function App() {
     const getAllRecords = async () => {
       axios.get(`http://${process.env.REACT_APP_URL}/getallrecords`).then((data) => {
         if (isApiSubscribed) {
-          setData(data.data.data)
+          const inf = data.data.data.slice()
+          inf.map((x, i) => {
+            x.s = i + 1
+            return x
+          })
+          console.log(inf);
+          setData(inf)
         }
       })
     }

@@ -13,19 +13,28 @@ import AddIcon from '@mui/icons-material/Add';
 // ];
 
 export default function Table({ columns, data }) {
+    const [page, setPage] = React.useState(0);
+    const handleChangePage = (event) => {
+        setPage(event)
+    };
     console.log(data);
+
+
     return (
         <>
             <Grid dir="rtl" container >
 
-                <Grid item lg={8} xs={12} sm={12} style={{ margin: '100px auto' }}>
-                    <Box sx={{ height: '500px', backgroundColor: '#efe4e6', boxShadow: "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;" }}>
+                <Grid item lg={6.5} xs={12} sm={12} style={{ margin: '100px auto' }}>
+                    <Box sx={{ height: '500px', width: '100%', backgroundColor: '#efe4e6', boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;" }}>
                         <DataGrid
+
                             rows={data}
                             columns={columns}
-                            pageSize={100}
-                            rowsPerPageOptions={[20]}
+                            pageSize={5}
+                            rowsPerPageOptions={[50]}
                             disableSelectionOnClick
+                            onPageChange={handleChangePage}
+
                         />
                     </Box>
                     <Link to="/form">
@@ -33,7 +42,7 @@ export default function Table({ columns, data }) {
                         <AddCircleIcon style={{ fontSize: 30 }} />
                     </Icon> */}
 
-                        <Fab style={{ position: 'relative', left: '47%', bottom: '9%', width: 45, height: 45 }} color="primary" aria-label="add">
+                        <Fab style={{ position: 'relative', left: '47%', bottom: '9%', width: 39, height: 39 }} color="primary" aria-label="add">
                             <AddIcon />
                         </Fab>
                     </Link>
