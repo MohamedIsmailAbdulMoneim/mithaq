@@ -22,15 +22,15 @@ const SeeMore = ({ inputs, data }) => {
   
 
   return (
-    <Box sx={{ width: 950, margin: '0 auto', backgroundColor: '#efe4e6', boxShadow: 'rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;' }}>
-      <Grid container sx={{ padding: '0 90px' }} spacing={2}>
+    <Box dir="rtl" style={{ width: 950, margin: '0 auto', backgroundColor: '#efe4e6', boxShadow: 'rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 0px 1px' }}>
+      <Grid container style={{ padding: '0 90px' }} spacing={2}>
         {inputs.map(x => (
           x.field === 'phoneNumber' ?
             arrOfNums.map(x => JSON.parse(x))?.map(a => (
-              <Grid item lg="12">
+              <Grid key={x.field} item lg={12}>
                 <TextField
                   aria-readonly
-                  value={a.phoneNumber}
+                  value={a.phoneNumber || ''}
                   fullWidth
                   label={x.headerName}
                   id={a.id}
@@ -39,27 +39,27 @@ const SeeMore = ({ inputs, data }) => {
             ))
             :
             x.field === 'notes' ?
-              <Grid item lg="12">
+              <Grid key={x.field} item lg={12}>
                 <TextField
                   aria-readonly
-                  value={memberDetails[x.field]}
+                  value={memberDetails[x.field] || ''}
                   fullWidth
                   label={x.headerName}
                   id="fullWidth"
                 />
               </Grid>
               :
-              <Grid item lg="6">
+              <Grid key={x.field} item lg={6}>
                 <TextField
                   aria-readonly
-                  value={memberDetails[x.field]}
+                  value={memberDetails[x.field] || ''}
                   fullWidth
                   label={x.headerName}
                   id="fullWidth"
                 />
               </Grid>
         ))}
-        <Grid item lg="12" style={{ marginBottom: 10 }}>
+        <Grid item lg={12} style={{ marginBottom: 10 }}>
           <ColorButton fullWidth variant="contained"><Link style={{ color: 'white' }} to={`/edit/${id}`}>تعديل البيانات</Link></ColorButton>
         </Grid>
       </Grid>

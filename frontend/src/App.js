@@ -10,11 +10,24 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Edit from './components/Edit';
 
+const getAllRecords = async (setData, isApiSubscribed=true) => {
+  axios.get(`http://${process.env.REACT_APP_URL}/getallrecords`).then((data) => {
+    console.log(data);
+    if (isApiSubscribed) {
+      const inf = data.data.data.slice()
+      inf.map((x, i) => {
+        x.s = i + 1
+        return x
+      })
+      console.log(inf);
+      setData(inf)
+      return inf
+    }
+  })
+}
 
 function App() {
   const [data, setData] = useState([])
-  console.log(data);
-
   const status = [
     { id: 1, title: 'تحت المتابعة' },
     { id: 2, title: 'في انتظار الأوراق' },
@@ -30,25 +43,71 @@ function App() {
     { id: 3, title: 'شهادة صحية' }
   ]
 
+  const handleSubmitInsert = (e, setOpen, newData, phoneNums, setMsg, setSeverity, setNewData, setPhoneNums, setPhoneInputs) => {
+    e.preventDefault()
+
+    setOpen(true);
+    getAllRecords(setData);
+
+    axios({
+      method: "POST",
+      data: { newData, phoneNums },
+      url: `http://${process.env.REACT_APP_URL}/addrecord`,
+      headers: { "Content-Type": "application/json" },
+    }).then(data => {
+      console.log(data);
+      if (data.data.msg === 'تم إدخال البيانات بنجاح') {
+        setMsg('تم إدخال البيانات بنجاح')
+        setSeverity('success')
+        setNewData({})
+        setPhoneNums({})
+        setPhoneInputs([])
+
+      } else {
+        console.log('hit');
+        setMsg('تم إدخال البيانات من قبل')
+        setSeverity('error')
+      }
+
+    })
+
+  }
+
+  const handleSubmitEdit = (e, editData, setOpen, phoneNums,newPhones, setMsg, setSeverity) => {
+    const filteredNullData = editData
+    Object.keys(filteredNullData).forEach(x => {
+      if (filteredNullData[x]?.length === 0 || filteredNullData[x] === null || filteredNullData[x] === 'لا توجد بيانات') {
+        delete filteredNullData[x]
+      }
+    })
+    console.log(filteredNullData);
+    e.preventDefault()
+    setOpen(true);
+    getAllRecords(setData)
+
+    axios({
+      method: "POST",
+      data: { filteredNullData, phoneNums, newPhones },
+      url: `http://${process.env.REACT_APP_URL}/editrecord`,
+      headers: { "Content-Type": "application/json" },
+    }).then(data => {
+      if (data.data.msg === 'تم إدخال البيانات من قبل') {
+        setMsg('تم إدخال البيانات من قبل')
+        setSeverity('error')
+      } else if (data.data.msg === 'تم إدخال البيانات بنجاح') {
+        setMsg('تم إدخال البيانات بنجاح')
+        setSeverity('success')
+
+      }
+
+    })
+
+  }
+
   useEffect(() => {
     let isApiSubscribed = true;
-    const getAllRecords = async () => {
-      axios.get(`http://${process.env.REACT_APP_URL}/getallrecords`).then((data) => {
-        if (isApiSubscribed) {
-          const inf = data.data.data.slice()
-          inf.map((x, i) => {
-            x.s = i + 1
-            return x
-          })
-          console.log(inf);
-          setData(inf)
-        }
-      })
-    }
 
-    getAllRecords()
-
-
+    getAllRecords(setData, isApiSubscribed)
     return () => {
       isApiSubscribed = false;
     }
@@ -61,11 +120,11 @@ function App() {
         <Header />
         <Routes>
           <Route base path='/' element={<Table columns={columns} data={data} />} />
-          <Route path='/form' element={<Form inputs={inputsData} status={status} additions={additions} />} />
+          <Route path='/form' element={<Form handleSubmit={handleSubmitInsert} inputs={inputsData} status={status} additions={additions} />} />
           {data.length > 0 &&
             <>
-              <Route path='/seemore/:id' element={<SeeMore inputs={inputsData} data={data} />} />
-              <Route path='/edit/:id' element={<Edit inputs={inputsData} data={data} status={status} additions={additions} />} />
+              <Route path='/seemore/:id' element={<SeeMore  inputs={inputsData} data={data} />} />
+              <Route path='/edit/:id' element={<Edit handleSubmit={handleSubmitEdit} inputs={inputsData} data={data} status={status} additions={additions} />} />
             </>
           }
         </Routes>
