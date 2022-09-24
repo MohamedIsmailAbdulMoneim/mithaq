@@ -47,7 +47,7 @@ function App() {
     e.preventDefault()
 
     setOpen(true);
-    getAllRecords(setData);
+    
 
     axios({
       method: "POST",
@@ -55,7 +55,7 @@ function App() {
       url: `http://${process.env.REACT_APP_URL}/addrecord`,
       headers: { "Content-Type": "application/json" },
     }).then(data => {
-      console.log(data);
+      getAllRecords(setData);
       if (data.data.msg === 'تم إدخال البيانات بنجاح') {
         setMsg('تم إدخال البيانات بنجاح')
         setSeverity('success')
@@ -83,7 +83,7 @@ function App() {
     console.log(filteredNullData);
     e.preventDefault()
     setOpen(true);
-    getAllRecords(setData)
+    
 
     axios({
       method: "POST",
@@ -91,7 +91,7 @@ function App() {
       url: `http://${process.env.REACT_APP_URL}/editrecord`,
       headers: { "Content-Type": "application/json" },
     }).then(data => {
-      console.log(data);
+      getAllRecords(setData)
       if (data.data.msg === 'تم إدخال البيانات من قبل') {
         setMsg('تم إدخال البيانات من قبل')
         setSeverity('error')
