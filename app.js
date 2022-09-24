@@ -110,12 +110,12 @@ const editRecord = (req, res) => {
     if(dataColumns.length > 0) trans.query(`UPDATE main SET ${dataColumns.map((x) => `${x} = ${filteredNullData[x]}`)} where id = ${id};`);
     if(phonesValue.length > 0) trans.query(`${phonesValue}`)
     if(newPhonesValue.length > 0) trans.query(`insert into phones (phone_number, main_id) values ${newPhonesValue.map(x => `(${x}, ${id})`)};`);
-    trans.commit(function (err, info) {
+    trans.commit(function (err, inf) {
         // here, the queries are done
         if(err){
-            res.send(data)
+            res.send(err)
         }else{
-            res.send(data)
+            res.send(inf)
         }
     });
 
