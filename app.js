@@ -42,7 +42,6 @@ const getAllRecords = (req, res) => {
 
 const addRecord = (req, res) => {
     const { newData, phoneNums } = req.body
-    newData.isShown = "TRUE"
     
     const reAranged = Object.values(phoneNums).filter(x => x.length > 2)
 
