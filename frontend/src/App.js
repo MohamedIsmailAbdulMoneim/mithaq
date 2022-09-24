@@ -91,6 +91,7 @@ function App() {
       url: `http://${process.env.REACT_APP_URL}/editrecord`,
       headers: { "Content-Type": "application/json" },
     }).then(data => {
+      console.log(data);
       if (data.data.msg === 'تم إدخال البيانات من قبل') {
         setMsg('تم إدخال البيانات من قبل')
         setSeverity('error')

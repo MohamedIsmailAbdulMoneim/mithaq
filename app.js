@@ -60,7 +60,7 @@ const addRecord = (req, res) => {
     const query = `insert into main (${Object.keys(newData)}) VALUES (${Object.values(newData)});`
     db.query(query, (err, details) => {
         if (err) {
-            console.log(err);
+            res.send(err);
 
         } else {
             if(reAranged.length > 0){
@@ -113,9 +113,9 @@ const editRecord = (req, res) => {
     trans.commit(function (err, info) {
         // here, the queries are done
         if(err){
-            console.log(err);
+            res.send(data)
         }else{
-            console.log(info);
+            res.send(data)
         }
     });
 
