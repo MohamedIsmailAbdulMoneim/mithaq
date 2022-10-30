@@ -22,15 +22,18 @@ export default function Table({ columns, data }) {
 
     return (
         <>
+
+
             <Grid dir="rtl" container >
 
-                <Grid item lg={6.5} xs={12} sm={12} style={{ margin: '100px auto' }}>
-                    <Box sx={{ height: '500px', width: '100%', backgroundColor: '#efe4e6', boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;" }}>
+                <Grid item lg={6.5} xs={12} sm={12} style={{ margin: '0 auto' }}>
+                    <Box sx={{ backgroundColor: 'transparent', height: '350px', width: '100%', color: '#0000', boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;" }}>
                         <DataGrid
 
                             rows={data}
                             columns={columns}
                             pageSize={5}
+                            style={{color: 'white'}}
                             rowsPerPageOptions={[50]}
                             disableSelectionOnClick
                             onPageChange={handleChangePage}

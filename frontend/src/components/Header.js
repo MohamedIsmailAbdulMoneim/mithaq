@@ -20,6 +20,7 @@ import { create } from 'jss';
 import rtl from 'jss-rtl';
 import { StylesProvider, jssPreset } from '@mui/styles';
 import { Link } from 'react-router-dom';
+import { margin } from '@mui/system';
 
 // Configure JSS
 const jss = create({
@@ -177,7 +178,8 @@ export default function PrimarySearchAppBar() {
       <Box dir="rtl" sx={{ flexGrow: 1, marginBottom: 12 }}>
         <AppBar position="fixed" sx={{ backgroundColor: '#310109' }}>
           <Toolbar>
-            <IconButton
+
+            {/* <IconButton
               size="large"
               edge="start"
               color="inherit"
@@ -185,16 +187,19 @@ export default function PrimarySearchAppBar() {
               sx={{ mr: 2 }}
             >
               <MenuIcon />
-            </IconButton>
+            </IconButton> */}
+            
             <Typography
               variant="h6"
               noWrap
               component="div"
               sx={{ display: { xs: 'none', sm: 'block' } }}
+              
+              
             >
-              <Link to='/'><img src={logo} alt="logo" style={{ width: 50, height: 50 }} /></Link>
+              <Link style={{margin: '0 auto'}} to='/'><img src={logo} alt="logo" style={{ width: 50, height: 50, position: 'absolute', top: '5%', right: '50%' }} /></Link>
             </Typography>
-            <Search >
+            {/* <Search >
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
@@ -202,14 +207,10 @@ export default function PrimarySearchAppBar() {
                 placeholder="البـحــث…"
                 inputProps={{ 'aria-label': 'search' }}
               />
-            </Search>
+            </Search> */}
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="error">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
+
               <IconButton
                 size="large"
                 aria-label="show 17 new notifications"

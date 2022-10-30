@@ -26,7 +26,6 @@ const Form = ({ inputs, additions, status, handleSubmit }) => {
   const [severity, setSeverity] = useState('')
   const [phoneInputs, setPhoneInputs] = useState([])
 
-  console.log(phoneNums);
 
   const defaultPropsForStatus = {
     options: status,
@@ -88,6 +87,7 @@ const Form = ({ inputs, additions, status, handleSubmit }) => {
                       {...defaultPropsForStatus}
                       id="clear-on-escape"
                       clearOnEscape
+                      name="status"
                       renderInput={(params) => (
                         <TextField {...params} name={x.field} label={x.headerName} id="standard-basic" variant="standard" margin="normal" style={{ marginTop: 16 }} fullWidth />
                       )}

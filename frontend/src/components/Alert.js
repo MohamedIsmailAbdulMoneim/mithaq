@@ -7,10 +7,10 @@ import { styled } from '@mui/material/styles';
 import { purple } from '@mui/material/colors';
 
 const ColorButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText(purple[800]),
-  backgroundColor: purple[500],
+  color: 'black',
+  backgroundColor: '#f4eeee',
   '&:hover': {
-    backgroundColor: purple[700],
+    backgroundColor: 'gray',
   },
 }));
 
@@ -20,12 +20,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 });
 
-export default function CustomizedSnackbars({ open, msg, severity, handleSubmit, handleClose }) {
-
-
+export default function CustomizedSnackbars({ open, msg, severity, handleSubmit, handleClose, text }) {
   return (
-    <Stack spacing={2} sx={{ width: "100%" }}>
-      <ColorButton style={{width: '80%', margin: '0 auto'}} onClick={handleSubmit} variant="contained">إدخال البيانات</ColorButton>
+    <Stack spacing={2} sx={{ width: "100%", marginBottom: 5 }}>
+      <ColorButton style={{width: '90%', margin: '0 auto'}} onClick={handleSubmit} variant="contained">{text}</ColorButton>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
           <span style={{ margin: '0 12px' }}>{msg}</span>

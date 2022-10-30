@@ -82,9 +82,11 @@ const Edit = ({ inputs, data, additions, status,handleSubmit }) => {
             </Grid>
             :
             x.field === 'phoneNumber' ?
-              phoneNums?.map(a => (
+            
+              phoneNums?.map((a, i) => (
                 <Grid key={x.field} item lg={12}>
-                  <TextField value={a.phoneNumber || ''} id={a.id} type="number" onChange={handleChange} name={x.field} x label={x.headerName} variant="standard" margin="normal" fullWidth />
+                  {console.log(phoneNums)}
+                  <TextField value={phoneNums[i].phoneNumber || ''} id={a.id} type="number" onChange={handleChange} name={x.field} label={x.headerName} variant="standard" margin="normal" fullWidth />
                 </Grid>
               ))
 

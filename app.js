@@ -26,7 +26,7 @@ const getAllRecords = (req, res) => {
     SELECT m.id, m.serial_number, m.contract_date, m.contract_time, m.contract_place,
     m.Husband_name, m.wife_name, m.wife_custodian, m.moakhar, m.Additions, m.cost,
     m.data_register_date, m.maazon_name, m.envoy_name, m.status, m.notes,(SELECT GROUP_CONCAT('{"phoneNumber": "', p.phone_number, '", "id": "', p.id, '"}', ',') FROM phones p WHERE p.main_id = m.id) as phoneNumbers
-    FROM main m
+    FROM main m order BY id DESC
     `
     db.query(query, (err, details) => {
         if (err) {
@@ -39,8 +39,10 @@ const getAllRecords = (req, res) => {
 
 const addRecord = (req, res) => {
     const { newData, phoneNums } = req.body
-    
+
+
     const reAranged = Object.values(phoneNums).filter(x => x.length > 2)
+    if(newData.Additions.length === 0 ) delete newData.Additions
 
     Object.keys(newData).forEach(x => {
         if (newData[x].length === 2) {
@@ -53,9 +55,14 @@ const addRecord = (req, res) => {
     Object.keys(phoneNums).forEach(x => {
         phoneNums[x] = `"${phoneNums[x]}"`
     })
+
+    console.log(newData);
+
+
     const query = `insert into main (${Object.keys(newData)}) VALUES (${Object.values(newData)});`
     db.query(query, (err, details) => {
         if (err) {
+            console.log(query);
             res.send(err);
 
         } else {
@@ -63,7 +70,7 @@ const addRecord = (req, res) => {
                 db.query('insert into phones (phone_number, main_id) values ?;', [reAranged.map(x => [x, details.insertId])], (err, data) => {
                     if (err) console.log(err);
                     else res.json({ data, msg: "تم إدخال البيانات بنجاح" });   
-    
+
                 })   
             }
             if(reAranged.length === 0){
@@ -75,9 +82,9 @@ const addRecord = (req, res) => {
 }
 
 const editRecord = (req, res) => {
-    
+
     const { filteredNullData, phoneNums, newPhones } = req.body
-    const {id} = filteredNullData
+    const { id } = filteredNullData
     const reAranged = phoneNums.filter(x => x.phoneNumber.length > 2)
     delete filteredNullData.phoneNumbers
     delete filteredNullData.id
@@ -92,26 +99,26 @@ const editRecord = (req, res) => {
         x.phoneNumber = `"${x.phoneNumber}"`
     })
     Object.keys(newPhones).forEach(x => {
-        if(newPhones[x].length === 0) delete newPhones[x];
+        if (newPhones[x].length === 0) delete newPhones[x];
         else newPhones[x] = `"${newPhones[x]}"`
     })
 
     const dataColumns = Object.keys(filteredNullData);
-    const phonesValue = String(reAranged.map(x => `update phones set phone_number = ${x.phoneNumber} where id = ${x.id};`)).replace(',','')
+    const phonesValue = String(reAranged.map(x => `update phones set phone_number = ${x.phoneNumber} where id = ${x.id};`)).replaceAll(',', '')
     const newPhonesValue = Object.values(newPhones);
     var trans = db.startTransaction();
 
     console.log(`UPDATE main SET ${dataColumns.map((x) => `${x} = ${filteredNullData[x]}`)} where id = ${id};`);
 
-    if(dataColumns.length > 0) trans.query(`UPDATE main SET ${dataColumns.map((x) => `${x} = ${filteredNullData[x]}`)} where id = ${id};`);
-    if(phonesValue.length > 0) trans.query(`${phonesValue}`)
-    if(newPhonesValue.length > 0) trans.query(`insert into phones (phone_number, main_id) values ${newPhonesValue.map(x => `(${x}, ${id})`)};`);
+    if (dataColumns.length > 0) trans.query(`UPDATE main SET ${dataColumns.map((x) => `${x} = ${filteredNullData[x]}`)} where id = ${id};`);
+    if (phonesValue.length > 0) trans.query(`${phonesValue}`)
+    if (newPhonesValue.length > 0) trans.query(`insert into phones (phone_number, main_id) values ${newPhonesValue.map(x => `(${x}, ${id})`)};`);
     trans.commit(function (err, inf) {
         // here, the queries are done
-        if(err){
+        if (err) {
             res.send(err)
-        }else{
-            res.send(inf)
+        } else {
+            res.json({ inf, msg: "تم إدخال البيانات بنجاح" });  
         }
     });
 
@@ -125,11 +132,11 @@ app.post('/editrecord', editRecord)
 
 app.use(
     express.static("frontend/build")
-  );
+);
 
 app.get("*", (req, res) => {
     res.sendFile(
-        path.resolve(__dirname, 'frontend' ,'build', 'index.html')
+        path.resolve(__dirname, 'frontend', 'build', 'index.html')
     );
 
 })
