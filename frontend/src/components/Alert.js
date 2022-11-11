@@ -23,7 +23,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function CustomizedSnackbars({ open, msg, severity, handleSubmit, handleClose, text }) {
   return (
     <Stack spacing={2} sx={{ width: "100%", marginBottom: 5 }}>
-      <ColorButton style={{width: '90%', margin: '0 auto'}} onClick={handleSubmit} variant="contained">{text}</ColorButton>
+      <ColorButton style={{width: '30%', margin: '0 auto'}} onClick={handleSubmit} variant="contained">{text}</ColorButton>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
           <span style={{ margin: '0 12px' }}>{msg}</span>

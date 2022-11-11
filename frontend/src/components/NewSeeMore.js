@@ -138,7 +138,7 @@ const NewSeeMore = ({ data, inputs }) => {
                 <label style={{ marginRight: 80 }}>ملاحظات :</label>
                 <textarea style={{ width: '95%', height: 150, margin: '10px auto', borderRadius: 15, padding: 5 }}></textarea>
             </Card >
-            <button  style={{ width: '90%', height: 30 }}><Link to={`/nedit/${id}`}>تعديل</Link></button>
+            <button  style={{ width: '30%', height: 30 }}><Link to={`/nedit/${id}`}>تعديل</Link></button>
         </>
         // </Card>
     )

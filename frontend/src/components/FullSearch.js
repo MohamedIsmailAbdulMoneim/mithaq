@@ -186,7 +186,7 @@ const FullSearch = ({ inputs, status, additions, data, columns }) => {
                             <textarea style={{ width: '95%', height: 150, margin: '10px auto', borderRadius: 15, padding: 5 }}></textarea>
                         </Card >
                         {/* <button onClick={(e) => handleSubmit(e, se setSeveri style={{margin: '0 auto', width: '90%', height: 30}}>إدخال</button> */}
-                        <button onClick={handleFullSearch} style={{ width: '90%', height: 30 }}>بحث</button>
+                        <button onClick={handleFullSearch} style={{ width: '30%', height: 30 }}>بحث</button>
                     </>
                     :
                     <Table columns={columns} data={filteredData} />
