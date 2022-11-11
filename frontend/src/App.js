@@ -1,13 +1,9 @@
 import './App.css';
 import Header from './components/Header';
-import SeeMore from './components/SeeMore';
-import Table from './components/Table'
 import { inputsData, columns } from './components/uiData/data'
-import Form from './components/Form';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import Edit from './components/Edit';
 import Search from './components/Search';
 import NewForm from './components/NewForm';
 import NewSeeMore from './components/NewSeeMore';
@@ -109,8 +105,6 @@ function App() {
           {data.length > 0 &&
             <>
               <Route path='/nseemore/:id' element={<NewSeeMore inputs={inputsData} data={data} />} />
-              <Route path='/seemore/:id' element={<SeeMore inputs={inputsData} data={data} />} />
-              <Route path='/edit/:id' element={<Edit handleSubmit={handleSubmitEdit} inputs={inputsData} data={data} status={status} additions={additions} />} />
               <Route path='/nedit/:id' element={<NewEdit handleSubmit={handleSubmitEdit} inputs={inputsData} data={data} status={status} additions={additions} />} />
 
             </>

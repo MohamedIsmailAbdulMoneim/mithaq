@@ -98,11 +98,11 @@ const Search = ({ status, data, columns }) => {
         <FlexDisplay>
           <div>
             <label style={{ display: 'block', textAlign: 'right' }}>تاريخ التسجيل</label>
-            <Input onChange={filterDataHandler} name="data_register_date" />
+            <Input placeholder='الشهر - السنة' onChange={filterDataHandler} name="data_register_date" />
           </div>
           <div>
             <label style={{ display: 'block', textAlign: 'right', }}>تاريخ العقد</label>
-            <Input onChange={filterDataHandler} name="contract_date" />
+            <Input placeholder='الشهر - السنة' onChange={filterDataHandler} name="contract_date" />
           </div>
         </FlexDisplay>
         <FlexDisplay>
