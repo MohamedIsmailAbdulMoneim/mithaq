@@ -107,8 +107,6 @@ const FullSearch = ({ inputs, status, additions, data, columns }) => {
         }
 
     }
-
-
     return (
         <>
             {

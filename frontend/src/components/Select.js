@@ -12,7 +12,7 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
+      width: 370,
     },
   },
 };
@@ -32,8 +32,7 @@ function getStyles(name, personName, theme) {
 export default function MultipleSelect({ names, label, onChange, inputVal }) {
   const theme = useTheme();
   return (
-    <div>
-      <FormControl style={{ display: 'flex', flexDirection: 'column', alignItems: 'start', }}>
+      <>
         <label style={{ marginRight: '10px' }}>{label} :</label>
         <Select
           labelId="demo-multiple-name-label"
@@ -45,13 +44,13 @@ export default function MultipleSelect({ names, label, onChange, inputVal }) {
           input={<OutlinedInput />}
           MenuProps={MenuProps}
           style={{
-            width: 370,
+            width: '82%',
             height: 25,
             marginRight: 10,
-            borderRadius: '5px',
-            background: '#ddc1b9e3',
             borderRadius: '10px',
+            background: '#ddc1b9e3',
             marginBottom: '8px'
+            
           }}
         >
           {names.map((name) => (
@@ -65,7 +64,6 @@ export default function MultipleSelect({ names, label, onChange, inputVal }) {
             </MenuItem>
           ))}
         </Select>
-      </FormControl>
-    </div>
+      </>
   );
 }

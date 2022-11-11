@@ -13,27 +13,19 @@ import NewForm from './components/NewForm';
 import NewSeeMore from './components/NewSeeMore';
 import NewEdit from './components/NewEdit';
 import FullSearch from './components/FullSearch'
-
-
-const getAllRecords = async (setData, isApiSubscribed = true) => {
-  axios.get(`http://${process.env.REACT_APP_URL}/getallrecords`).then((data) => {
-
-    if (isApiSubscribed) {
-      const inf = data.data.data.slice()
-      inf.map((x, i) => {
-        x.s = i + 1
-        return x
-      })
-      setData(inf)
-      return inf
-    }
-  })
-}
+import useHttp from './components/hooks/useHttp';
 
 function App() {
   const [data, setData] = useState([])
-
   console.log(data);
+  const httpSetup = {
+    method: "GET",
+    data: null,
+    url: `http://${process.env.REACT_APP_URL}/getallrecords`,
+    headers: null,
+  }
+  const { request } = useHttp()
+
   const status = [
     { id: 1, title: 'تحت المتابعة' },
     { id: 2, title: 'في انتظار الأوراق' },
@@ -49,62 +41,23 @@ function App() {
     { id: 3, title: 'شهادة صحية' }
   ]
 
-  const handleSubmitInsert = (e, setOpen, newData, phoneNums, setMsg, setSeverity, setNewData, setPhoneNums, setPhoneInputs) => {
-    e.preventDefault()
-    setOpen(true);
 
-    console.log('hit');
-    axios({
-      method: "POST",
-      data: { newData, phoneNums },
-      url: `http://${process.env.REACT_APP_URL}/addrecord`,
-      headers: { "Content-Type": "application/json" },
-    }).then(data => {
-      console.log('hit');
-      getAllRecords(setData);
-      if (data.data.msg === 'تم إدخال البيانات بنجاح') {
-        setMsg('تم إدخال البيانات بنجاح')
-        setSeverity('success')
-        setNewData({ Additions: [] })
-        setPhoneNums({})
-        setPhoneInputs([])
-        console.log(data.data);
-        // window.location.href = 'http://localhost:3001/';
-        const interval = setInterval(() => {
-          window.location.href = 'http://miatech.tk/';
-        }, 3000);
-
-      } else {
-        console.log('hit');
-        setMsg('تم إدخال البيانات من قبل')
-        setSeverity('error')
-      }
-
-    })
-
-  }
 
   const handleSubmitEdit = (e, editData, setOpen, phoneNums, newPhones, setMsg, setSeverity) => {
     e.preventDefault()
     setOpen(true);
-
     const filteredNullData = editData
     Object.keys(filteredNullData).forEach(x => {
       if (filteredNullData[x]?.length === 0 || filteredNullData[x] === null || filteredNullData[x] === 'لا توجد بيانات') {
         delete filteredNullData[x]
       }
     })
-    
-    
-
-
     axios({
       method: "POST",
       data: { filteredNullData, phoneNums, newPhones },
       url: `http://${process.env.REACT_APP_URL}/editrecord`,
       headers: { "Content-Type": "application/json" },
     }).then(data => {
-      getAllRecords(setData)
       if (data.data.msg === 'تم إدخال البيانات بنجاح') {
         setMsg('تم إدخال البيانات بنجاح')
         setSeverity('success')
@@ -115,7 +68,7 @@ function App() {
       else {
         setMsg('تم إدخال البيانات من قبل')
         setSeverity('error')
-      }  
+      }
 
     })
 
@@ -124,7 +77,14 @@ function App() {
   useEffect(() => {
     let isApiSubscribed = true;
 
-    getAllRecords(setData, isApiSubscribed)
+    request(httpSetup).then(data => {
+      const inf = data.data.data.slice()
+      inf.map((x, i) => {
+        x.s = i + 1
+        return x
+      })
+      setData(inf)
+    })
     return () => {
       isApiSubscribed = false;
     }
@@ -141,10 +101,10 @@ function App() {
       <div className="App" style={{ background: 'transparent' }}>
         <Header />
         <Routes>
-          <Route base path='/' element={<Search  columns={columns} data={data}  status={status} />} />
+          <Route base path='/' element={<Search columns={columns} data={data} status={status} />} />
           {/* <Route path='/form' element={<Form handleSubmit={handleSubmitInsert} inputs={inputsData} status={status} additions={additions} />} /> */}
-          <Route path='/form' element={<NewForm handleSubmit={handleSubmitInsert} inputs={inputsData} status={status} additions={additions} />} />
-          <Route path='/fullsearch' element={<FullSearch  data={data} columns={columns}   inputs={inputsData} status={status} additions={additions} />} />
+          <Route path='/form' element={<NewForm inputs={inputsData} status={status} additions={additions} />} />
+          <Route path='/fullsearch' element={<FullSearch data={data} columns={columns} inputs={inputsData} status={status} additions={additions} />} />
 
           {data.length > 0 &&
             <>

@@ -27,6 +27,7 @@ const FlexDisplay = styled.div`
 display: flex;
 justify-content: space-evenly;
 padding: 10px
+margin: 0
 `
 
 const Input = styled.input`
@@ -54,7 +55,7 @@ const Search = ({ status, data, columns }) => {
   const [filtered, setFiltered] = useState(false)
   const [filteredData, setFilteredData] = useState([])
 
-  
+
   const filterDataHandler = (e) => {
     setDataFilters(old => ({
       ...old,
@@ -105,12 +106,9 @@ const Search = ({ status, data, columns }) => {
           </div>
         </FlexDisplay>
         <FlexDisplay>
-          <button onClick={handleSearch}>
-            <SearchIcon />
-          </button>
           <div>
             <label style={{ display: 'block', textAlign: 'right', }}>الحالة</label>
-            <select onChange={filterDataHandler} name="status" style={{ width: 150, height: 25 }}>
+            <select onChange={filterDataHandler} name="status" style={{ width: 370, height: 35 }}>
               {status.map(s => (
                 <option key={s.id} id={s.id}>{s.title}</option>
               ))}
@@ -118,6 +116,9 @@ const Search = ({ status, data, columns }) => {
             </select>
           </div>
         </FlexDisplay>
+        <button style={{width: 70, borderRadius: "100px", marginTop: 5}} onClick={handleSearch}>
+          <SearchIcon />
+        </button>
       </Div>
       <div style={{ width: 500, display: 'flex', justifyContent: 'space-between', margin: '15px auto' }}>
         <Circle>

@@ -8,6 +8,7 @@ import { purple } from '@mui/material/colors';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import MultipleSelect from './Select';
+import useHttp from './hooks/useHttp';
 
 const ColorButton = style(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[800]),
@@ -23,19 +24,17 @@ const Input = styled.input`
     width: 80%;
     margin-right: 10px;
     height: 20px;
-    border-radius: 5px;
-    background: #ddc1b9e3;
     border-radius: 10px;
+    background: #ddc1b9e3;
     margin-bottom: 8px
 
     
 `
 
 const Select = styled.select`
-width: 370px;
+width: 80%;
 margin-right: 10px;
 height: 25px;
-border-radius: 5px;
 background: #ddc1b9e3;
 border-radius: 10px;
 margin-bottom: 8px
@@ -53,15 +52,48 @@ const Label = styled.label`
 margin-right: 10px
 `
 
-const NewForm = ({ inputs, status, additions, handleSubmit }) => {
-    const [newData, setNewData] = useState({Additions: []})
+const NewForm = ({ inputs, status, additions }) => {
+    const [newData, setNewData] = useState({ Additions: [] })
     const [phoneNums, setPhoneNums] = useState({})
     const [open, setOpen] = useState(false);
     const [msg, setMsg] = useState('')
     const [severity, setSeverity] = useState('')
     const [phoneInputs, setPhoneInputs] = useState([])
+    const { request } = useHttp()
 
-    console.log(newData);
+    const httpSetup = {
+        method: "POST",
+        data: { newData, phoneNums },
+        url: `http://${process.env.REACT_APP_URL}/addrecord`,
+        headers: { "Content-Type": "application/json" },
+    }
+
+    const submitHandler = () => {
+        setOpen(true);
+        request(httpSetup).then(data => {
+                if (data?.data?.msg === 'تم إدخال البيانات بنجاح') {
+                setMsg('تم إدخال البيانات بنجاح')
+                setSeverity('success')
+                setNewData({ Additions: [] })
+                setPhoneNums({})
+                setPhoneInputs([])
+                // window.location.href = 'http://localhost:3001/';
+                const interval = setInterval(() => {
+                  window.location.href = 'http://miatech.tk/';
+                }, 3000);
+              } else {
+                setMsg('تم إدخال البيانات من قبل')
+                setSeverity('error')
+              }
+        })
+    }
+
+
+
+
+
+
+
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -80,21 +112,19 @@ const NewForm = ({ inputs, status, additions, handleSubmit }) => {
     }
 
     const handleChange = (e) => {
-        console.log();
+
         if (e.target.name.includes('phoneNumber')) {
             setPhoneNums(old => ({
                 ...old,
                 [e.target.name]: e.target.value
             }))
-        } else if(e.target.name === 'Additions'){
+        } else if (e.target.name === 'Additions') {
             setNewData(old => ({
                 ...old,
                 // On autofill we get a stringified value.
                 Additions: typeof e.target.value === 'string' ? e.target.value.split(',') : e.target.value,
-              }));
-        } else
-        
-        {
+            }));
+        } else {
             setNewData(old => ({
                 ...old,
                 [e.target.name]: e.target.value
@@ -107,8 +137,8 @@ const NewForm = ({ inputs, status, additions, handleSubmit }) => {
             {inputs.map(x => (
                 <div dir='rtl' style={{ display: 'flex', background: 'transparent', justifyContent: 'space-evenly' }}>
                     {x.map(y => (
-                        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                            <Card style={{ display: 'flex', flexDirection: 'column', width: 450, alignItems: 'start', background: 'rgba(171, 120, 106, 0.89)', margin: 10, borderRadius: 20 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
+                            <Card style={{ display: 'flex', flexDirection: 'column', width: '70%', alignItems: 'start', background: 'rgba(171, 120, 106, 0.89)', margin: 10, borderRadius: 20 }}>
                                 {y.map(z => (
                                     <Div>
 
@@ -130,7 +160,7 @@ const NewForm = ({ inputs, status, additions, handleSubmit }) => {
                                                 </>
                                                 :
                                                 z.field === 'Additions' ?
-                                                    <MultipleSelect inputVal={newData['Additions']} onChange={handleChange}  label={z.headerName} names={additions} />
+                                                    <MultipleSelect inputVal={newData['Additions']} onChange={handleChange} label={z.headerName} names={additions} />
                                                     :
                                                     z.field === 'contract_time' ?
                                                         <>
@@ -184,7 +214,7 @@ const NewForm = ({ inputs, status, additions, handleSubmit }) => {
                 <textarea onChange={handleChange} name='notes' style={{ width: '95%', height: 150, margin: '10px auto', borderRadius: 15, padding: 5 }}></textarea>
             </Card>
             {/* <button onClick={(e) => handleSubmit(e, setOpen, newData, phoneNums, setMsg, setSeverity, setNewData, setPhoneNums, setPhoneInputs)} style={{margin: '0 auto', width: '90%', height: 30}}>إدخال</button> */}
-            <Alert text={'إدخال البيانات'} style={{width: '90%'}} open={open} handleSubmit={(e) => handleSubmit(e, setOpen, newData, phoneNums, setMsg, setSeverity, setNewData, setPhoneNums, setPhoneInputs)} severity={severity} msg={msg} handleClose={handleClose} />
+            <Alert text={'إدخال البيانات'} style={{ width: '90%' }} open={open} handleSubmit={submitHandler} severity={severity} msg={msg} handleClose={handleClose} />
         </>
         // </Card>
     )

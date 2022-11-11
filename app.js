@@ -56,7 +56,6 @@ const addRecord = (req, res) => {
         phoneNums[x] = `"${phoneNums[x]}"`
     })
 
-    console.log(newData);
 
 
     const query = `insert into main (${Object.keys(newData)}) VALUES (${Object.values(newData)});`
@@ -76,6 +75,7 @@ const addRecord = (req, res) => {
             if(reAranged.length === 0){
                 res.json({ details, msg: "تم إدخال البيانات بنجاح" }); 
             }
+            console.log(details);
 
         }
     })
