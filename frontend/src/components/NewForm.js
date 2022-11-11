@@ -32,7 +32,7 @@ const Input = styled.input`
 `
 
 const Select = styled.select`
-width: 80%;
+width: 82%;
 margin-right: 10px;
 height: 25px;
 background: #ddc1b9e3;

@@ -33,10 +33,9 @@ const Input = styled.input`
 `
 
 const Select = styled.select`
-width: 370px;
+width: 82%;
 margin-right: 10px;
 height: 25px;
-border-radius: 5px;
 background: #ddc1b9e3;
 border-radius: 10px;
 margin-bottom: 8px
