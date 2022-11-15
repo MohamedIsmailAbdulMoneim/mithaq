@@ -31,8 +31,8 @@ margin: 0
 `
 
 const Input = styled.input`
-width: 150px;
-height: 25px;
+width: 80px;
+height: 30px;
 `
 
 const Circle = styled.div`
@@ -108,7 +108,7 @@ const Search = ({ status, data, columns }) => {
         <FlexDisplay>
           <div>
             <label style={{ display: 'block', textAlign: 'right', }}>الحالة</label>
-            <select onChange={filterDataHandler} name="status" style={{ width: 370, height: 35 }}>
+            <select onChange={filterDataHandler} name="status" style={{ width: 280, height: 35 }}>
               {status.map(s => (
                 <option key={s.id} id={s.id}>{s.title}</option>
               ))}
