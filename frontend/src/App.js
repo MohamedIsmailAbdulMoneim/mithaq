@@ -39,7 +39,7 @@ function App() {
 
 
 
-  const handleSubmitEdit = (e, editData, setOpen, phoneNums, newPhones, setMsg, setSeverity) => {
+  const handleSubmitEdit = (e, editData, setOpen, phoneNums, newPhones, setMsg, setSeverity, id) => {
     e.preventDefault()
     setOpen(true);
     const filteredNullData = editData
@@ -58,7 +58,7 @@ function App() {
         setMsg('تم إدخال البيانات بنجاح')
         setSeverity('success')
         const interval = setInterval(() => {
-          window.location.href = 'http://miatech.tk/';
+          window.location.href = `http://miatech.tk/nseemore/${id}`;
         }, 3000);
       }
       else {

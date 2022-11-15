@@ -56,11 +56,11 @@ margin-right: 10px
 const NewEdit = ({ data, inputs, status, additions, handleSubmit }) => {
     const { id } = useParams()
     const [memberDetails] = data.map(x => {
-        
-        return {...x, Additions: x.Additions?.split(',')  }
-        
-        
-    
+
+        return { ...x, Additions: x.Additions?.split(',') }
+
+
+
     }).filter(x => x.id === parseInt(id))
     console.log(memberDetails.Additions);
     const arrOfNums = memberDetails?.phoneNumbers?.split(',,') || []
@@ -101,6 +101,7 @@ const NewEdit = ({ data, inputs, status, additions, handleSubmit }) => {
 
     const handleChange = (e) => {
         if (e.target.name.includes('phoneNumber')) {
+
             setPhoneNums(old => {
                 return old.map(x => {
                     if (x.id === e.target.id) {
@@ -172,11 +173,14 @@ const NewEdit = ({ data, inputs, status, additions, handleSubmit }) => {
                                                             :
                                                             z.field === 'phoneNumber' ?
                                                                 <>
+
                                                                     {phoneNums?.map((a, i) => (
+
                                                                         <>
+                                                                            {console.log(a)}
 
                                                                             <Label>{z.headerName} :</Label>
-                                                                            <Input placeholder={phoneNums[i].phoneNumber || ''} type='number' onChange={handleChange} name={z.field} label={z.headerName} />
+                                                                            <Input placeholder={phoneNums[i].phoneNumber || ''} id={a.id} type='number' onChange={handleChange} name={z.field} label={z.headerName} />
 
                                                                         </>
                                                                     ))}
@@ -216,7 +220,7 @@ const NewEdit = ({ data, inputs, status, additions, handleSubmit }) => {
                 <textarea style={{ width: '95%', height: 150, margin: '10px auto', borderRadius: 15, padding: 5 }}></textarea>
             </Card>
             {/* <button onClick={(e) => handleSubmit(e, setOpen, editData, phoneNums, setMsg, setSeverity, seteditData, setPhoneNums, setPhoneInputs)} style={{margin: '0 auto', width: '90%', height: 30}}>إدخال</button> */}
-            <Alert text={'تعديل البيانات'} style={{ width: '90%' }} open={open} handleSubmit={(e) => handleSubmit(e, editData, setOpen, phoneNums, newPhones, setMsg, setSeverity)} severity={severity} msg={msg} handleClose={handleClose} />
+            <Alert text={'تعديل البيانات'} style={{ width: '90%' }} open={open} handleSubmit={(e) => handleSubmit(e, editData, setOpen, phoneNums, newPhones, setMsg, setSeverity, id)} severity={severity} msg={msg} handleClose={handleClose} />
         </>
         // </Card>
     )

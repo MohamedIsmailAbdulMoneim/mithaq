@@ -104,7 +104,8 @@ const editRecord = (req, res) => {
     })
 
     const dataColumns = Object.keys(filteredNullData);
-    const phonesValue = String(reAranged.map(x => `update phones set phone_number = ${x.phoneNumber} where id = ${x.id};`)).replaceAll(',', '')
+    const phonesValue = String(reAranged.map(x => `update phones set phone_number = ${x.phoneNumber} where id = ${x.id};`)).replace(/,/g, '');
+    console.log(phonesValue);
     const newPhonesValue = Object.values(newPhones);
     var trans = db.startTransaction();
 
@@ -115,8 +116,10 @@ const editRecord = (req, res) => {
     if (newPhonesValue.length > 0) trans.query(`insert into phones (phone_number, main_id) values ${newPhonesValue.map(x => `(${x}, ${id})`)};`);
     trans.commit(function (err, inf) {
         // here, the queries are done
+        console.log(inf);
         if (err) {
             res.send(err)
+            console.log(err);
         } else {
             res.json({ inf, msg: "تم إدخال البيانات بنجاح" });  
         }
