@@ -62,8 +62,7 @@ const NewEdit = ({ data, inputs, status, additions, handleSubmit }) => {
 
 
     }).filter(x => x.id === parseInt(id))
-    console.log(memberDetails.Additions);
-    const arrOfNums = memberDetails?.phoneNumbers?.split(',,') || []
+    const arrOfNums = memberDetails?.phoneNumber?.split(',,') || []
     arrOfNums[arrOfNums.length - 1] = arrOfNums[arrOfNums.length - 1]?.substr(0, arrOfNums[arrOfNums.length - 1].length - 1)
 
     const [editData, setEditData] = useState(memberDetails)
@@ -177,7 +176,6 @@ const NewEdit = ({ data, inputs, status, additions, handleSubmit }) => {
                                                                     {phoneNums?.map((a, i) => (
 
                                                                         <>
-                                                                            {console.log(a)}
 
                                                                             <Label>{z.headerName} :</Label>
                                                                             <Input placeholder={phoneNums[i].phoneNumber || ''} id={a.id} type='number' onChange={handleChange} name={z.field} label={z.headerName} />

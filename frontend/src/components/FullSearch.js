@@ -58,7 +58,6 @@ const FullSearch = ({ inputs, status, additions, data, columns }) => {
     const [dataFilters, setDataFilters] = useState({})
     const [filtered, setFiltered] = useState(false)
     const [filteredData, setFilteredData] = useState([])
-    console.log(filtered);
 
 
 
@@ -92,7 +91,8 @@ const FullSearch = ({ inputs, status, additions, data, columns }) => {
         setFilteredData(old => {
             return copiedData.filter(x => {
                 return Object.entries(filterNull).every(([key, value]) => {
-                    if (x[key]) return x[key].includes(value)
+                    console.log(key);
+                    if (x[key]) return String(x[key]).includes(value)
                     else return false
                 })
             })

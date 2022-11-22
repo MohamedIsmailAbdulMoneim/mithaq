@@ -56,7 +56,8 @@ margin-right: 10px
 const NewSeeMore = ({ data, inputs }) => {
     const { id } = useParams()
     const [memberDetails] = data.filter(x => x.id === parseInt(id))
-    const arrOfNums = memberDetails.phoneNumbers?.split(',,') || []
+    console.log(memberDetails)
+    const arrOfNums = memberDetails.phoneNumber?.split(',,') || []
     arrOfNums[arrOfNums?.length - 1] = arrOfNums[arrOfNums.length - 1]?.substr(0, arrOfNums[arrOfNums.length - 1].length - 1)
     return (
         <>

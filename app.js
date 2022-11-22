@@ -25,7 +25,7 @@ const getAllRecords = (req, res) => {
     const query = `
     SELECT m.id, m.serial_number, m.contract_date, m.contract_time, m.contract_place,
     m.Husband_name, m.wife_name, m.wife_custodian, m.moakhar, m.Additions, m.cost,
-    m.data_register_date, m.maazon_name, m.envoy_name, m.status, m.notes,(SELECT GROUP_CONCAT('{"phoneNumber": "', p.phone_number, '", "id": "', p.id, '"}', ',') FROM phones p WHERE p.main_id = m.id) as phoneNumbers
+    m.data_register_date, m.maazon_name, m.envoy_name, m.status, m.notes,(SELECT GROUP_CONCAT('{"phoneNumber": "', p.phone_number, '", "id": "', p.id, '"}', ',') FROM phones p WHERE p.main_id = m.id) as phoneNumber
     FROM main m order BY id DESC
     `
     db.query(query, (err, details) => {
@@ -89,6 +89,7 @@ const editRecord = (req, res) => {
     delete filteredNullData.phoneNumbers
     delete filteredNullData.id
     delete filteredNullData.s
+    console.log(filteredNullData);
 
     Object.keys(filteredNullData).forEach(x => {
         if (!Number(filteredNullData[x])) {
@@ -105,18 +106,15 @@ const editRecord = (req, res) => {
 
     const dataColumns = Object.keys(filteredNullData);
     const phonesValue = String(reAranged.map(x => `update phones set phone_number = ${x.phoneNumber} where id = ${x.id};`)).replace(/,/g, '');
-    console.log(phonesValue);
     const newPhonesValue = Object.values(newPhones);
     var trans = db.startTransaction();
 
-    console.log(`UPDATE main SET ${dataColumns.map((x) => `${x} = ${filteredNullData[x]}`)} where id = ${id};`);
 
     if (dataColumns.length > 0) trans.query(`UPDATE main SET ${dataColumns.map((x) => `${x} = ${filteredNullData[x]}`)} where id = ${id};`);
     if (phonesValue.length > 0) trans.query(`${phonesValue}`)
     if (newPhonesValue.length > 0) trans.query(`insert into phones (phone_number, main_id) values ${newPhonesValue.map(x => `(${x}, ${id})`)};`);
     trans.commit(function (err, inf) {
         // here, the queries are done
-        console.log(inf);
         if (err) {
             res.send(err)
             console.log(err);
