@@ -48,25 +48,30 @@ function App() {
         filteredNullData[x] = ''
       }
     })
-    axios({
-      method: "POST",
-      data: { filteredNullData, phoneNums, newPhones },
-      url: `http://${process.env.REACT_APP_URL}/editrecord`,
-      headers: { "Content-Type": "application/json" },
-    }).then(data => {
-      if (data.data.msg === 'تم إدخال البيانات بنجاح') {
-        setMsg('تم إدخال البيانات بنجاح')
-        setSeverity('success')
-        const interval = setInterval(() => {
-          // window.location.href = `http://miatech.tk/nseemore/${id}`;
-        }, 3000);
-      }
-      else {
-        setMsg('تم إدخال البيانات من قبل')
-        setSeverity('error')
-      }
+    if (editData.status?.length > 0) {
+      axios({
+        method: "POST",
+        data: { filteredNullData, phoneNums, newPhones },
+        url: `http://${process.env.REACT_APP_URL}/editrecord`,
+        headers: { "Content-Type": "application/json" },
+      }).then(data => {
+        if (data.data.msg === 'تم إدخال البيانات بنجاح') {
+          setMsg('تم إدخال البيانات بنجاح')
+          setSeverity('success')
+          const interval = setInterval(() => {
+            // window.location.href = `http://miatech.tk/nseemore/${id}`;
+          }, 3000);
+        }
+        else {
+          setMsg('تم إدخال البيانات من قبل')
+          setSeverity('error')
+        }
 
-    })
+      })
+    }else{
+      setMsg('لم يتم إدخال الحالة')
+      setSeverity('error')
+    }
 
   }
 

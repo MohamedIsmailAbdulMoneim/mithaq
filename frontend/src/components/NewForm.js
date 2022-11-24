@@ -70,7 +70,8 @@ const NewForm = ({ inputs, status, additions }) => {
 
     const submitHandler = () => {
         setOpen(true);
-        request(httpSetup).then(data => {
+        if(newData.status?.length > 0){
+            request(httpSetup).then(data => {
                 if (data?.data?.msg === 'تم إدخال البيانات بنجاح') {
                 setMsg('تم إدخال البيانات بنجاح')
                 setSeverity('success')
@@ -86,6 +87,11 @@ const NewForm = ({ inputs, status, additions }) => {
                 setSeverity('error')
               }
         })
+        }else{
+            setMsg('لم يتم إدخال الحالة')
+            setSeverity('error')
+        }
+        
     }
 
 
