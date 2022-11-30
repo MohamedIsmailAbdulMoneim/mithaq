@@ -82,7 +82,7 @@ const addRecord = (req, res) => {
 }
 
 const editRecord = (req, res) => {
-
+    console.log(req.body);
     const { filteredNullData, phoneNums, newPhones } = req.body
     const { id } = filteredNullData
     const reAranged = phoneNums.filter(x => x.phoneNumber.length > 2)
