@@ -59,7 +59,7 @@ function App() {
           setMsg('تم إدخال البيانات بنجاح')
           setSeverity('success')
           const interval = setInterval(() => {
-            // window.location.href = `http://miatech.tk/nseemore/${id}`;
+            window.location.href = `http://miatech.tk/nseemore/${id}`;
           }, 3000);
         }
         else {

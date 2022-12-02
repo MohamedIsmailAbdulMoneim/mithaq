@@ -129,6 +129,7 @@ const NewEdit = ({ data, inputs, status, additions, handleSubmit }) => {
         <>
             {inputs.map(x => (
                 <div dir='rtl' style={{ display: 'flex', background: 'transparent', justifyContent: 'space-evenly' }}>
+                   
                     {x.map(y => (
                         <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
                             <Card style={{ display: 'flex', flexDirection: 'column', width: '90%', alignItems: 'start', background: 'rgba(171, 120, 106, 0.89)', margin: 10, borderRadius: 20 }}>
