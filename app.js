@@ -61,7 +61,7 @@ const addRecord = (req, res) => {
     const query = `insert into main (${Object.keys(newData)}) VALUES (${Object.values(newData)});`
     db.query(query, (err, details) => {
         if (err) {
-            console.log(query);
+            console.log(err);
             res.send(err);
 
         } else {
