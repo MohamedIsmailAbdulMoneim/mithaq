@@ -82,14 +82,14 @@ const addRecord = (req, res) => {
 }
 
 const editRecord = (req, res) => {
-    console.log(req.body);
     const { filteredNullData, phoneNums, newPhones } = req.body
+
     const { id } = filteredNullData
     const reAranged = phoneNums.filter(x => x.phoneNumber.length > 2)
     delete filteredNullData.phoneNumbers
     delete filteredNullData.id
     delete filteredNullData.s
-    console.log(filteredNullData);
+    delete filteredNullData.phoneNumber
 
     Object.keys(filteredNullData).forEach(x => {
         if (!Number(filteredNullData[x])) {
@@ -117,7 +117,7 @@ const editRecord = (req, res) => {
         // here, the queries are done
         if (err) {
             res.send(err)
-            console.log(err);
+            // console.log(err);
         } else {
             res.json({ inf, msg: "تم إدخال البيانات بنجاح" });  
         }

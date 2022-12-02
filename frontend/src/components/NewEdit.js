@@ -1,11 +1,12 @@
 import { Card, Grid } from '@mui/material'
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Alert from './Alert'
 import Button from "@mui/material/Button";
 import { styled as style } from '@mui/material/styles';
 import { purple } from '@mui/material/colors';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import MultipleSelect from './Select';
 import { useParams } from 'react-router-dom';
 
@@ -18,7 +19,6 @@ const ColorButton = style(Button)(({ theme }) => ({
 }));
 
 let idNum = 1
-let devNum = 1
 
 const Input = styled.input`
     width: 80%;
@@ -28,7 +28,6 @@ const Input = styled.input`
     background: #ddc1b9e3;
     border-radius: 10px;
     margin-bottom: 8px
-
     
 `
 
@@ -56,10 +55,12 @@ margin-right: 10px
 const NewEdit = ({ data, inputs, status, additions, handleSubmit }) => {
     const { id } = useParams()
     const [memberDetails] = data.map(x => {
+
         return { ...x, Additions: x.Additions?.split(',') }
 
+
+
     }).filter(x => x.id === parseInt(id))
-    const inputRef = useRef()
     const arrOfNums = memberDetails?.phoneNumber?.split(',,') || []
     arrOfNums[arrOfNums.length - 1] = arrOfNums[arrOfNums.length - 1]?.substr(0, arrOfNums[arrOfNums.length - 1].length - 1)
 
@@ -72,7 +73,7 @@ const NewEdit = ({ data, inputs, status, additions, handleSubmit }) => {
     const [phoneInputs, setPhoneInputs] = useState([])
 
 
-    console.log(phoneInputs);
+    console.log(editData);
 
 
 
@@ -85,33 +86,9 @@ const NewEdit = ({ data, inputs, status, additions, handleSubmit }) => {
     };
 
     const handlePhoneInput = () => {
-        const input =
-            <div ref={inputRef} name={`phoneNumber_${++devNum}`} style={{ width: '100%' }}>
-                <Label>رقم التليفون :</Label>
-                <div style={{ display: 'flex', width: '100%' }}>
-                    {/* <phoneInputs style={{color: 'black'}}/>  */}
-
-                    <Input type='number' onChange={handleNewPhones} name={`phoneNumber_${++idNum}`} label={'رقم التليفون'} />
-                    <HighlightOffIcon onClick={handleDeleteNewPhone} style={{ marginRight: 5 }} />
-                </div>
-            </div>
-
+        const input = <> <Label>رقم التليفون :</Label> <Input type='number' onChange={handleNewPhones} name={`phoneNumber_${++idNum}`} label={'رقم التليفون'} /> </>
         setPhoneInputs(old => [...old, input])
     }
-
-    const handleDeleteNewPhone = (e) => {
-        // setNewPhones(old => {
-        //     return delete old[e.target.name]
-        // })
-
-        const inputIndex = Array.prototype.indexOf.call(inputRef.current.parentNode.children, e.target.parentNode)
-
-        // phoneInputs.splice(inputIndex, 1)
-        // setPhoneInputs(phoneInputs)
-        console.log(e.target.parentNode.parentNode);
-
-    }
-    // Array.prototype.indexOf.call(parent.children, child)
 
     const handleNewPhones = (e) => {
         setNewPhones(old => ({
@@ -218,10 +195,9 @@ const NewEdit = ({ data, inputs, status, additions, handleSubmit }) => {
                                         {
                                             z.field === 'phoneNumber'
                                             &&
-                                            <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                                                {/* <AddIcon onClick={handlePhoneInput} />
-                                                <RemoveIcon onClick={handlePhoneInput} /> */}
-                                                <button onClick={handlePhoneInput} style={{ width: '65%', height: 30, borderRadius: 15, cursor: 'pointer', marginTop: 5 }}>إضافة تليفون آخر</button>
+                                            <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+                                                <AddIcon onClick={handlePhoneInput} />
+                                                <RemoveIcon onClick={handlePhoneInput} />
                                             </div>
                                         }
                                     </Div>
