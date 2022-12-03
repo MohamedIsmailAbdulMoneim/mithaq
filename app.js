@@ -109,7 +109,7 @@ const editRecord = (req, res) => {
     const newPhonesValue = Object.values(newPhones);
     var trans = db.startTransaction();
 
-
+    console.log(`UPDATE main SET ${dataColumns.map((x) => `${x} = ${filteredNullData[x]}`)} where id = ${id};`)
     if (dataColumns.length > 0) trans.query(`UPDATE main SET ${dataColumns.map((x) => `${x} = ${filteredNullData[x]}`)} where id = ${id};`);
     if (phonesValue.length > 0) trans.query(`${phonesValue}`)
     if (newPhonesValue.length > 0) trans.query(`insert into phones (phone_number, main_id) values ${newPhonesValue.map(x => `(${x}, ${id})`)};`);
@@ -130,7 +130,6 @@ const editRecord = (req, res) => {
 app.get('/getallrecords', getAllRecords)
 app.post('/addrecord', addRecord)
 app.post('/editrecord', editRecord)
-
 app.use(
     express.static("frontend/build")
 );
