@@ -58,9 +58,10 @@ function App() {
         if (data.data.msg === 'تم إدخال البيانات بنجاح') {
           setMsg('تم إدخال البيانات بنجاح')
           setSeverity('success')
-          const interval = setInterval(() => {
-            window.location.href = `http://miatech.tk/nseemore/${id}`;
-          }, 3000);
+          console.log(data);
+          // const interval = setInterval(() => {
+          //   // window.location.href = `http://miatech.tk/nseemore/${id}`;
+          // }, 3000);
         }
         else {
           setMsg('تم إدخال البيانات من قبل')

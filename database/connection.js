@@ -6,7 +6,7 @@ const pool = require('mysql').createPool({
     host: "localhost",
     user: "root",
     password: '',
-    database: "methaq_db",
+    database: "mithaq",
     multipleStatements: true,
     dateStrings: 'date',
     clearExpired: true,
