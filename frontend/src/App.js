@@ -45,7 +45,7 @@ function App() {
     const filteredNullData = editData
     Object.keys(filteredNullData).forEach(x => {
       if (filteredNullData[x]?.length === 0 || filteredNullData[x] === null || filteredNullData[x] === 'لا توجد بيانات') {
-        filteredNullData[x] = ''
+        filteredNullData[x] = null
       }
     })
     if (editData.status?.length > 0) {
