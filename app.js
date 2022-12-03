@@ -86,10 +86,8 @@ const editRecord = (req, res) => {
 
     const { id } = filteredNullData
     const reAranged = phoneNums.filter(x => x.phoneNumber.length > 2)
-        if(filteredNullData.contract_date === null){
-            console.log(true);
-            filteredNullData.contract_date = '0000-00-00'
-        }
+        if(filteredNullData.contract_date === null) filteredNullData.contract_date = '0000-00-00'
+        if(filteredNullData.contract_time === null) filteredNullData.contract_time = '00:00:00'
     delete filteredNullData.id
     delete filteredNullData.s
     delete filteredNullData.phoneNumber
