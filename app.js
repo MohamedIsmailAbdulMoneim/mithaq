@@ -86,11 +86,11 @@ const editRecord = (req, res) => {
 
     const { id } = filteredNullData
     const reAranged = phoneNums.filter(x => x.phoneNumber.length > 2)
-    delete filteredNullData.phoneNumbers
+    if(filteredNullData.contract_date?.length === 0) filteredNullData.contract_date = '0000-00-00'
     delete filteredNullData.id
     delete filteredNullData.s
     delete filteredNullData.phoneNumber
-
+    console.log(filteredNullData);
     Object.keys(filteredNullData).forEach(x => {
         if (!Number(filteredNullData[x])) {
             filteredNullData[x] = `"${filteredNullData[x]}"`
