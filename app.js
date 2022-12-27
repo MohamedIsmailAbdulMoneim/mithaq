@@ -86,12 +86,10 @@ const editRecord = (req, res) => {
 
     const { id } = filteredNullData
     const reAranged = phoneNums.filter(x => x.phoneNumber.length > 2)
-        if(filteredNullData.contract_date === null) filteredNullData.contract_date = '0000-00-00'
-        if(filteredNullData.contract_time === null) filteredNullData.contract_time = '00:00:00'
     delete filteredNullData.id
     delete filteredNullData.s
     delete filteredNullData.phoneNumber
-    console.log(filteredNullData);
+
     Object.keys(filteredNullData).forEach(x => {
         if (!Number(filteredNullData[x])) {
             filteredNullData[x] = `"${filteredNullData[x]}"`
@@ -110,7 +108,7 @@ const editRecord = (req, res) => {
     const newPhonesValue = Object.values(newPhones);
     var trans = db.startTransaction();
 
-    console.log(`UPDATE main SET ${dataColumns.map((x) => `${x} = ${filteredNullData[x]}`)} where id = ${id};`)
+
     if (dataColumns.length > 0) trans.query(`UPDATE main SET ${dataColumns.map((x) => `${x} = ${filteredNullData[x]}`)} where id = ${id};`);
     if (phonesValue.length > 0) trans.query(`${phonesValue}`)
     if (newPhonesValue.length > 0) trans.query(`insert into phones (phone_number, main_id) values ${newPhonesValue.map(x => `(${x}, ${id})`)};`);
