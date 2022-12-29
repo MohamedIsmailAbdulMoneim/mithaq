@@ -85,7 +85,7 @@ function App() {
         x.s = i + 1
         return x
       })
-      inf.forEach(x => x.data_register_date = x.data_register_date.slice(0, 6))
+      inf.forEach(x => x.data_register_date = x.data_register_date.slice(0, 10))
       setData(inf)
     })
     return () => {
