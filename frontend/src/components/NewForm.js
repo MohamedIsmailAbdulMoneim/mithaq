@@ -54,16 +54,14 @@ margin-right: 10px
 
 const NewForm = ({ inputs, status, additions }) => {
     const [newData, setNewData] = useState({ Additions: [] })
-    const [phoneNums, setPhoneNums] = useState({})
     const [open, setOpen] = useState(false);
     const [msg, setMsg] = useState('')
     const [severity, setSeverity] = useState('')
-    const [phoneInputs, setPhoneInputs] = useState([])
     const { request } = useHttp()
 
     const httpSetup = {
         method: "POST",
-        data: { newData, phoneNums },
+        data: { newData },
         url: `http://${process.env.REACT_APP_URL}/addrecord`,
         headers: { "Content-Type": "application/json" },
     }
@@ -76,11 +74,9 @@ const NewForm = ({ inputs, status, additions }) => {
                 setMsg('تم إدخال البيانات بنجاح')
                 setSeverity('success')
                 setNewData({ Additions: [] })
-                setPhoneNums({})
-                setPhoneInputs([])
                 // window.location.href = 'http://localhost:3001/';
                 const interval = setInterval(() => {
-                  window.location.href = 'http://miatech.tk/';
+                  window.location.href = 'http://methaq-family.com:5000/';
                 }, 3000);
               } else {
                 setMsg('تم إدخال البيانات من قبل')
@@ -109,22 +105,11 @@ const NewForm = ({ inputs, status, additions }) => {
         setOpen(false);
     };
 
-    const handlePhoneInput = () => {
 
-        const input = <Input type='number' onChange={handleChange} name={`phoneNumber_${++idNum}`} label={'رقم التليفون'} />
-
-
-        setPhoneInputs(old => [...old, input])
-    }
 
     const handleChange = (e) => {
 
-        if (e.target.name.includes('phoneNumber')) {
-            setPhoneNums(old => ({
-                ...old,
-                [e.target.name]: e.target.value
-            }))
-        } else if (e.target.name === 'Additions') {
+        if (e.target.name === 'Additions') {
             setNewData(old => ({
                 ...old,
                 // On autofill we get a stringified value.
@@ -183,8 +168,7 @@ const NewForm = ({ inputs, status, additions }) => {
                                                             z.field === 'phoneNumber' ?
                                                                 <>
                                                                     <Label>{z.headerName} :</Label>
-                                                                    <Input value={phoneNums[z.field] || ''} type='number' onChange={handleChange} name={z.field} label={z.headerName} />
-                                                                    {phoneInputs}
+                                                                    <Input value={newData[z.field] || ''} type='number' onChange={handleChange} name={z.field} label={z.headerName} />
                                                                 </>
                                                                 :
                                                                 z.field === 'notes' ?
@@ -194,14 +178,6 @@ const NewForm = ({ inputs, status, additions }) => {
                                                                         <Label>{z.headerName} :</Label>
                                                                         <Input value={newData[z.field] || ''} type='text' onChange={handleChange} name={z.field} label={z.headerName} />
                                                                     </>
-                                        }
-                                        {
-                                            z.field === 'phoneNumber'
-                                            &&
-                                            <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
-                                                <AddIcon onClick={handlePhoneInput} />
-                                                <RemoveIcon onClick={handlePhoneInput} />
-                                            </div>
                                         }
                                     </Div>
 
@@ -219,7 +195,6 @@ const NewForm = ({ inputs, status, additions }) => {
                 <label style={{ marginRight: 80 }}>ملاحظات :</label>
                 <textarea onChange={handleChange} name='notes' style={{ width: '95%', height: 150, margin: '10px auto', borderRadius: 15, padding: 5 }}></textarea>
             </Card>
-            {/* <button onClick={(e) => handleSubmit(e, setOpen, newData, phoneNums, setMsg, setSeverity, setNewData, setPhoneNums, setPhoneInputs)} style={{margin: '0 auto', width: '90%', height: 30}}>إدخال</button> */}
             <Alert text={'إدخال البيانات'} style={{ width: '90%' }} open={open} handleSubmit={submitHandler} severity={severity} msg={msg} handleClose={handleClose} />
         </>
         // </Card>

@@ -39,7 +39,7 @@ function App() {
 
 
 
-  const handleSubmitEdit = (e, editData, setOpen, phoneNums, newPhones, setMsg, setSeverity, id) => {
+  const handleSubmitEdit = (e, editData, setOpen, setMsg, setSeverity, id) => {
     e.preventDefault()
     setOpen(true);
     const filteredNullData = editData
@@ -51,7 +51,7 @@ function App() {
     if (editData.status?.length > 0) {
       axios({
         method: "POST",
-        data: { filteredNullData, phoneNums, newPhones },
+        data: { filteredNullData },
         url: `http://${process.env.REACT_APP_URL}/editrecord`,
         headers: { "Content-Type": "application/json" },
       }).then(data => {
@@ -64,6 +64,7 @@ function App() {
           // }, 3000);
         }
         else {
+          console.log(data)
           setMsg('تم إدخال البيانات من قبل')
           setSeverity('error')
         }

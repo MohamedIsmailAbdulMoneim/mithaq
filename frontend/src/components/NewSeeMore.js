@@ -58,7 +58,6 @@ const NewSeeMore = ({ data, inputs }) => {
     const [memberDetails] = data.filter(x => x.id === parseInt(id))
     console.log(memberDetails)
     const arrOfNums = memberDetails.phoneNumber?.split(',,') || []
-    arrOfNums[arrOfNums?.length - 1] = arrOfNums[arrOfNums.length - 1]?.substr(0, arrOfNums[arrOfNums.length - 1].length - 1)
     return (
         <>
             {inputs.map(x => (
@@ -82,7 +81,7 @@ const NewSeeMore = ({ data, inputs }) => {
                                                 </>
                                                 :
                                                 z.field === 'Additions' ?
-                                                
+
                                                     <>
                                                         {console.log(memberDetails[z.field])}
                                                         <Label>{z.headerName} :</Label>
@@ -102,14 +101,13 @@ const NewSeeMore = ({ data, inputs }) => {
                                                             </>
                                                             :
                                                             z.field === 'phoneNumber' ?
-                                                            arrOfNums.map(x => JSON.parse(x))?.map(a => (
-                                                                <>
-                                                                
-                                                                <Label>{z.headerName} :</Label>
-                                                                <Input value={a.phoneNumber || ''} id={a.id} type='number' name={z.field}  />
-                                                                </>
 
-                                                            ))
+                                                                <>
+
+                                                                    <Label>{z.headerName} :</Label>
+                                                                    <Input value={memberDetails[z.field] || ''} type='number' name={z.field} />
+
+                                                                </>
                                                                 :
                                                                 z.field === 'notes' ?
                                                                     ''
@@ -139,7 +137,7 @@ const NewSeeMore = ({ data, inputs }) => {
                 <label style={{ marginRight: 80 }}>ملاحظات :</label>
                 <textarea style={{ width: '95%', height: 150, margin: '10px auto', borderRadius: 15, padding: 5 }}></textarea>
             </Card >
-            <button  style={{ width: '30%', height: 30 }}><Link to={`/nedit/${id}`}>تعديل</Link></button>
+            <button style={{ width: '30%', height: 30 }}><Link to={`/nedit/${id}`}>تعديل</Link></button>
         </>
         // </Card>
     )
