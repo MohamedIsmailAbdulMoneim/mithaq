@@ -87,7 +87,7 @@ const editRecord = (req, res) => {
         // here, the queries are done
         if (err) {
             res.send(err)
-            // console.log(err);
+            console.log(err);
         } else {
             res.json({ inf, msg: "تم إدخال البيانات بنجاح" });
         }
