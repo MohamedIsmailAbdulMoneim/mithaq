@@ -60,7 +60,7 @@ function App() {
           setSeverity('success')
           console.log(data);
           // const interval = setInterval(() => {
-          //   // window.location.href = `http://miatech.tk/nseemore/${id}`;
+            // window.location.href = `http://miatech.tk/nseemore/${id}`;
           // }, 3000);
         }
         else {

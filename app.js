@@ -40,13 +40,14 @@ const addRecord = (req, res) => {
     if (newData.Additions.length === 0) delete newData.Additions
 
     Object.keys(newData).forEach(x => {
-        if (newData[x].length === 2) {
-            delete newData[x]
-        }
+        // if (newData[x].length === 2) {
+        //     delete newData[x]
+        // }
         if (!Number(newData[x])) {
             newData[x] = `"${newData[x]}"`
         }
     })
+    console.log(newData);
 
     const query = `insert into main (${Object.keys(newData)}) VALUES (${Object.values(newData)});`
     db.query(query, (err, details) => {

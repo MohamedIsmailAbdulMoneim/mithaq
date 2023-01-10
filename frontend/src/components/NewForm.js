@@ -58,6 +58,7 @@ const NewForm = ({ inputs, status, additions }) => {
     const [msg, setMsg] = useState('')
     const [severity, setSeverity] = useState('')
     const { request } = useHttp()
+    console.log(newData);
 
     const httpSetup = {
         method: "POST",

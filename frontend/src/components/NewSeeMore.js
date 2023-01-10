@@ -135,7 +135,7 @@ const NewSeeMore = ({ data, inputs }) => {
             < Card dir="rtl" style={{ display: 'flex', flexDirection: 'column', width: '97%', alignItems: 'start', background: 'rgba(171, 120, 106, 0.89)', margin: '10px auto', borderRadius: 20 }
             }>
                 <label style={{ marginRight: 80 }}>ملاحظات :</label>
-                <textarea style={{ width: '95%', height: 150, margin: '10px auto', borderRadius: 15, padding: 5 }}></textarea>
+                <textarea style={{ width: '95%', height: 150, margin: '10px auto', borderRadius: 15, padding: 5 }}>{memberDetails.notes}</textarea>
             </Card >
             <button style={{ width: '30%', height: 30 }}><Link to={`/nedit/${id}`}>تعديل</Link></button>
         </>

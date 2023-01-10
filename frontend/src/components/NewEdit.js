@@ -144,9 +144,9 @@ const NewEdit = ({ data, inputs, status, additions, handleSubmit }) => {
                                                                     <Input placeholder={editData[z.field] || ''} type='number' onChange={handleChange} name={z.field} label={z.headerName} />
                                                                 </>
                                                                 :
-                                                                z.field === 'notes' ?
-                                                                    ''
-                                                                    :
+                                                                // z.field === 'notes' ?
+                                                                //     ''
+                                                                //     :
                                                                     <>
                                                                         <Label>{z.headerName} :</Label>
                                                                         <Input value={editData[z.field] || ''} type='text' onChange={handleChange} name={z.field} label={z.headerName} />
