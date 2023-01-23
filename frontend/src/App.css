@@ -1,12 +1,17 @@
 @import url(https://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
 
 body {
-  background-image: linear-gradient(to bottom, rgba(21, 2, 2, 0.98), rgba(171, 120, 106, 0.89), rgba(21, 2, 2, 0.98)), url(./background.jpg);
-  background-repeat: repeat;
-  background-size:25%;
+  background-image: linear-gradient(to bottom, rgba(15, 1, 1, 0.98), rgba(40, 15, 8, 0.89), rgba(18, 1, 1, 0.98)), url(./background.jpg);
+  image-rendering: pixelated; 
+   background-repeat:no-repeat;
+  background-size:cover;
   background-attachment:fixed;
   background-position: center;
   font-family: 'Droid Arabic Kufi', serif;
+}
+
+img {
+  image-rendering: pixelated;
 }
 
 

@@ -217,7 +217,8 @@ export default function PrimarySearchAppBar() {
                 color="inherit"
               >
                 <Badge badgeContent={17} color="error">
-                  <NotificationsIcon />
+                  {/* <NotificationsIcon /> */}
+                
                 </Badge>
               </IconButton>
               <IconButton

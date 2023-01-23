@@ -8,7 +8,7 @@ import Table from './Table';
 
 const Div = styled.div`
 margin: 0 auto;
-width: 500px;
+width: 55%;
 background: rgba(235, 220, 216, 0.89);
 box-sizing: border-box;
 padding-bottom: 10px
@@ -17,7 +17,7 @@ padding-bottom: 10px
 const DivHeading = styled.div`
 width: 100%;
 height: 30px;
-background: rgba(171, 120, 106, 0.89);
+background: rgb(132 83 91);
 margin-bottom: 15px;
 padding: 5px;
 box-sizing: border-box;
@@ -31,14 +31,18 @@ margin: 0
 `
 
 const Input = styled.input`
-width: 80px;
+width: 220px;
+height: 30px;
+`
+const Select = styled.select`
+width: 219px;
 height: 30px;
 `
 
 const Circle = styled.div`
 width: 150px;
 height: 150px;
-background: rgba(171, 120, 106, 0.89);
+background: rgb(132 83 91);
 border-radius: 200px;
 display: flex;
 flex-direction: column;
@@ -46,10 +50,9 @@ justify-content: center;
 box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 font-size: 17pt;
 cursor: pointer;
-
 `
 
-const Search = ({ status, data, columns }) => {
+const Search = ({ status, data, columns, contract_issuer, contract_type }) => {
 
   const [dataFilters, setDataFilters] = useState({})
   const [filtered, setFiltered] = useState(false)
@@ -107,6 +110,26 @@ const Search = ({ status, data, columns }) => {
         </FlexDisplay>
         <FlexDisplay>
           <div>
+            <label style={{ display: 'block', textAlign: 'right' }}>نوع العقد</label>
+            <Select name={'contract_type'} onChange={filterDataHandler} >
+              {contract_type.map(x => (
+                <option>{x.title}</option>
+              ))}
+              <option id="0" selected></option>
+            </Select>
+          </div>
+          <div>
+            <label style={{ display: 'block', textAlign: 'right', }}>جهة العقد</label>
+            <Select name={'contract_issuer'} onChange={filterDataHandler} >
+              {contract_issuer.map(x => (
+                <option>{x.title}</option>
+              ))}
+              <option id="0" selected></option>
+            </Select>
+          </div>
+        </FlexDisplay>
+        <FlexDisplay>
+          <div>
             <label style={{ display: 'block', textAlign: 'right', }}>الحالة</label>
             <select onChange={filterDataHandler} name="status" style={{ width: 280, height: 35 }}>
               {status.map(s => (
@@ -116,7 +139,7 @@ const Search = ({ status, data, columns }) => {
             </select>
           </div>
         </FlexDisplay>
-        <button style={{width: 70, borderRadius: "100px", marginTop: 5}} onClick={handleSearch}>
+        <button style={{ width: 70, borderRadius: "100px", marginTop: 5 }} onClick={handleSearch}>
           <SearchIcon />
         </button>
       </Div>

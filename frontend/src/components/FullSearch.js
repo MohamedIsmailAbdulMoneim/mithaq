@@ -53,7 +53,7 @@ const Label = styled.label`
 margin-right: 10px
 `
 
-const FullSearch = ({ inputs, status, additions, data, columns }) => {
+const FullSearch = ({ inputs, status, additions, data, columns, contract_issuer, contract_type }) => {
 
     const [dataFilters, setDataFilters] = useState({})
     const [filtered, setFiltered] = useState(false)
@@ -131,6 +131,28 @@ const FullSearch = ({ inputs, status, additions, data, columns }) => {
                                                                     <Label>{z.headerName} :</Label>
                                                                     <Select name={z.field} onChange={filterFullDataHandler} >
                                                                         {status.map(x => (
+                                                                            <option>{x.title}</option>
+                                                                        ))}
+                                                                        <option id="0" selected></option>
+                                                                    </Select>
+                                                                </>
+                                                                :
+                                                                z.field === 'contract_type' ?
+                                                                <>
+                                                                    <Label>{z.headerName} :</Label>
+                                                                    <Select name={z.field} onChange={filterFullDataHandler} >
+                                                                        {contract_type.map(x => (
+                                                                            <option>{x.title}</option>
+                                                                        ))}
+                                                                        <option id="0" selected></option>
+                                                                    </Select>
+                                                                </>
+                                                                :
+                                                                z.field === 'contract_issuer' ?
+                                                                <>
+                                                                    <Label>{z.headerName} :</Label>
+                                                                    <Select name={z.field} onChange={filterFullDataHandler} >
+                                                                        {contract_issuer.map(x => (
                                                                             <option>{x.title}</option>
                                                                         ))}
                                                                         <option id="0" selected></option>

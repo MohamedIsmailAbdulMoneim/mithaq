@@ -58,6 +58,14 @@ export const inputsData = [
                 headerName: 'اسم المندوب',
             },
             {
+                field: 'contract_type',
+                headerName: 'نوع العقد'
+            },
+            {
+                field: 'contract_issuer',
+                headerName: 'جهة العقد'
+            },
+            {
                 field: 'serial_number',
                 headerName: 'رقم الوثيقة',
             }
@@ -82,6 +90,10 @@ export const inputsData = [
             {
                 field: 'phoneNumber',
                 headerName: 'رقم التليفون',
+            },
+            {
+                field: 'address',
+                headerName: 'العنوان'
             }
         ]
     ]

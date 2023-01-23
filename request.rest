@@ -1,0 +1,26 @@
+# POST http://localhost:5000/register
+# content-type: application/json
+
+# {
+# "username": "admin",
+# "password": "123"
+# }
+
+POST http://localhost:5000/login
+content-type: application/json
+
+{
+"username": "admin",
+"password": "123"
+}
+
+#############################################
+
+GET http://localhost:5000/getallrecords
+Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzQyNTA3OTMsImV4cCI6MTY3Njg0Mjc5M30.-iscre2Uuk9i8rs9vnkAxugyj7rW6-JnzzCRTLgGnxo"
+
+#############################################
+
+# POST  http://localhost:5000/getrecdata
+
+POST  http://localhost:5000/getrecdata

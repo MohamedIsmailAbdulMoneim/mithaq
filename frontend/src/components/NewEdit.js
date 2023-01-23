@@ -52,7 +52,7 @@ const Label = styled.label`
 margin-right: 10px
 `
 
-const NewEdit = ({ data, inputs, status, additions, handleSubmit }) => {
+const NewEdit = ({ data, inputs, status, additions, handleSubmit, contract_issuer, contract_type }) => {
     const { id } = useParams()
     const [memberDetails] = data.map(x => {
         return { ...x, Additions: x.Additions?.split(',') }
@@ -121,36 +121,58 @@ const NewEdit = ({ data, inputs, status, additions, handleSubmit }) => {
                                                     </Select>
                                                 </>
                                                 :
-                                                z.field === 'Additions' ?
+                                                z.field === 'contract_type' ?
                                                     <>
-                                                        <MultipleSelect inputVal={editData['Additions']} onChange={handleChange} label={z.headerName} names={additions} />
+                                                        <Label>{z.headerName} :</Label>
+                                                        <Select onChange={handleChange} name={z.field}>
+                                                            {contract_type.map(x => (
+                                                                <option selected={editData[z.field] === x.title ? true : false}>{x.title}</option>
+                                                            ))}
+                                                            <option id="0"></option>
+                                                        </Select>
                                                     </>
                                                     :
-                                                    z.field === 'contract_time' ?
+                                                    z.field === 'contract_issuer' ?
                                                         <>
                                                             <Label>{z.headerName} :</Label>
-                                                            <Input value={editData[z.field] || ''} type='time' onChange={handleChange} name={z.field} label={z.headerName} />
+                                                            <Select onChange={handleChange} name={z.field}>
+                                                                {contract_issuer.map(x => (
+                                                                    <option selected={editData[z.field] === x.title ? true : false}>{x.title}</option>
+                                                                ))}
+                                                                <option id="0"></option>
+                                                            </Select>
                                                         </>
                                                         :
-                                                        z.field === 'moakhar' || z.field === 'cost' ?
+                                                        z.field === 'Additions' ?
                                                             <>
-                                                                <Label>{z.headerName} :</Label>
-                                                                <Input value={editData[z.field] || ''} type='number' onChange={handleChange} name={z.field} label={z.headerName} />
+                                                                <MultipleSelect inputVal={editData['Additions']} onChange={handleChange} label={z.headerName} names={additions} />
                                                             </>
                                                             :
-                                                            z.field === 'phoneNumber' ?
+                                                            z.field === 'contract_time' ?
                                                                 <>
                                                                     <Label>{z.headerName} :</Label>
-                                                                    <Input placeholder={editData[z.field] || ''} type='number' onChange={handleChange} name={z.field} label={z.headerName} />
+                                                                    <Input value={editData[z.field] || ''} type='time' onChange={handleChange} name={z.field} label={z.headerName} />
                                                                 </>
                                                                 :
-                                                                // z.field === 'notes' ?
-                                                                //     ''
-                                                                //     :
+                                                                z.field === 'moakhar' || z.field === 'cost' ?
                                                                     <>
                                                                         <Label>{z.headerName} :</Label>
-                                                                        <Input value={editData[z.field] || ''} type='text' onChange={handleChange} name={z.field} label={z.headerName} />
+                                                                        <Input value={editData[z.field] || ''} type='number' onChange={handleChange} name={z.field} label={z.headerName} />
                                                                     </>
+                                                                    :
+                                                                    z.field === 'phoneNumber' ?
+                                                                        <>
+                                                                            <Label>{z.headerName} :</Label>
+                                                                            <Input placeholder={editData[z.field] || ''} type='number' onChange={handleChange} name={z.field} label={z.headerName} />
+                                                                        </>
+                                                                        :
+                                                                        // z.field === 'notes' ?
+                                                                        //     ''
+                                                                        //     :
+                                                                        <>
+                                                                            <Label>{z.headerName} :</Label>
+                                                                            <Input value={editData[z.field] || ''} type='text' onChange={handleChange} name={z.field} label={z.headerName} />
+                                                                        </>
                                         }
                                     </Div>
 

@@ -9,18 +9,32 @@ import NewForm from './components/NewForm';
 import NewSeeMore from './components/NewSeeMore';
 import NewEdit from './components/NewEdit';
 import FullSearch from './components/FullSearch'
+import Login from './components/Login';
 import useHttp from './components/hooks/useHttp';
 
 function App() {
   const [data, setData] = useState([])
-  console.log(data);
+  const [token, setToken] = useState(localStorage.getItem('tkn'))
+
   const httpSetup = {
     method: "GET",
-    data: null,
     url: `http://${process.env.REACT_APP_URL}/getallrecords`,
-    headers: null,
+    headers: { "Authorization": `Bearer ${token}` },
   }
+  console.log(httpSetup);
+  console.log(data)
   const { request } = useHttp()
+
+  const contract_issuer = [
+    { id: 1, title: 'مكتب' },
+    { id: 2, title: 'مندوب' }
+  ]
+
+  const contract_type = [
+    { id: 1, title: 'زواج' },
+    { id: 2, title: 'طلاق' },
+    { id: 3, title: 'تصادق' }
+  ]
 
   const status = [
     { id: 1, title: 'تحت المتابعة' },
@@ -36,6 +50,16 @@ function App() {
     { id: 2, title: 'منديل كتب الكتاب' },
     { id: 3, title: 'شهادة صحية' }
   ]
+
+  const handleLogin = (data) => {
+
+    request(data).then(data => {
+      localStorage.setItem('tkn', data.data.token)
+      setToken(data.data.token)
+    }).catch(err => {
+      console.log(err);
+    })
+  }
 
 
 
@@ -53,15 +77,18 @@ function App() {
         method: "POST",
         data: { filteredNullData },
         url: `http://${process.env.REACT_APP_URL}/editrecord`,
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
       }).then(data => {
         if (data.data.msg === 'تم إدخال البيانات بنجاح') {
           setMsg('تم إدخال البيانات بنجاح')
           setSeverity('success')
           console.log(data);
-          // const interval = setInterval(() => {
-            // window.location.href = `http://miatech.tk/nseemore/${id}`;
-          // }, 3000);
+          const interval = setInterval(() => {
+          window.location.href = `http://methaq-family.com/nseemore/${id}`;
+          }, 3000);
         }
         else {
           console.log(data)
@@ -70,7 +97,7 @@ function App() {
         }
 
       })
-    }else{
+    } else {
       setMsg('لم يتم إدخال الحالة')
       setSeverity('error')
     }
@@ -92,7 +119,7 @@ function App() {
     return () => {
       isApiSubscribed = false;
     }
-  }, [])
+  }, [token])
 
 
 
@@ -103,19 +130,27 @@ function App() {
   return (
     <BrowserRouter >
       <div className="App" style={{ background: 'transparent' }}>
+
         <Header />
+
         <Routes>
-          <Route base path='/' element={<Search columns={columns} data={data} status={status} />} />
-          {/* <Route path='/form' element={<Form handleSubmit={handleSubmitInsert} inputs={inputsData} status={status} additions={additions} />} /> */}
-          <Route path='/form' element={<NewForm inputs={inputsData} status={status} additions={additions} />} />
-          <Route path='/fullsearch' element={<FullSearch data={data} columns={columns} inputs={inputsData} status={status} additions={additions} />} />
-
-          {data.length > 0 &&
+          {token ?
             <>
-              <Route path='/nseemore/:id' element={<NewSeeMore inputs={inputsData} data={data} />} />
-              <Route path='/nedit/:id' element={<NewEdit handleSubmit={handleSubmitEdit} inputs={inputsData} data={data} status={status} additions={additions} />} />
 
+              <Route base path='/' element={<Search columns={columns} data={data} status={status} contract_issuer={contract_issuer} contract_type={contract_type} />} />
+              <Route path='/form' element={<NewForm token={token} inputs={inputsData} status={status} additions={additions} contract_issuer={contract_issuer} contract_type={contract_type} />} />
+              <Route path='/fullsearch' element={<FullSearch data={data} columns={columns} inputs={inputsData} status={status} additions={additions} contract_issuer={contract_issuer} contract_type={contract_type}  />} />
+              {data.length > 0 &&
+                <>
+                  <Route path='/nseemore/:id' element={<NewSeeMore inputs={inputsData} data={data} token={token} />} />
+                  <Route path='/nedit/:id' element={<NewEdit handleSubmit={handleSubmitEdit} inputs={inputsData} data={data} status={status} additions={additions} contract_issuer={contract_issuer} contract_type={contract_type} />} />
+
+                </>
+              }
             </>
+
+            :
+            <Route base path='/' element={<Login handleLogin={handleLogin} />} />
           }
         </Routes>
       </div>

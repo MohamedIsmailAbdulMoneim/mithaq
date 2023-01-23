@@ -9,6 +9,8 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import MultipleSelect from './Select';
 import { Link, useParams } from 'react-router-dom';
+import download from 'js-file-download';
+import axios from 'axios';
 
 const ColorButton = style(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(purple[800]),
@@ -53,11 +55,24 @@ const Label = styled.label`
 margin-right: 10px
 `
 
-const NewSeeMore = ({ data, inputs }) => {
+const NewSeeMore = ({ data, inputs, token }) => {
     const { id } = useParams()
     const [memberDetails] = data.filter(x => x.id === parseInt(id))
-    console.log(memberDetails)
-    const arrOfNums = memberDetails.phoneNumber?.split(',,') || []
+
+    const getRecData = () => {
+        axios({
+            method: "POST",
+            data: memberDetails,
+            url: `http://${process.env.REACT_APP_URL}/getrecdata`,
+            responseType: 'arraybuffer',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+        }).then(resp => {
+            download(resp.data, '2.docx');
+        });
+    }
     return (
         <>
             {inputs.map(x => (
@@ -137,7 +152,8 @@ const NewSeeMore = ({ data, inputs }) => {
                 <label style={{ marginRight: 80 }}>ملاحظات :</label>
                 <textarea style={{ width: '95%', height: 150, margin: '10px auto', borderRadius: 15, padding: 5 }}>{memberDetails.notes}</textarea>
             </Card >
-            <button style={{ width: '30%', height: 30 }}><Link to={`/nedit/${id}`}>تعديل</Link></button>
+            <button onClick={getRecData} style={{ width: '30%', height: 30 }}>تحميل البيانات</button>
+            <Link to={`/nedit/${id}`}><button style={{ width: '30%', height: 30, cursor: 'pointer' }}>تعديل</button></Link>
         </>
         // </Card>
     )
