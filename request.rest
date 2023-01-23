@@ -1,10 +1,12 @@
-# POST http://localhost:5000/register
-# content-type: application/json
+POST http://methaq-family.com/:5000/register
+content-type: application/json
 
-# {
-# "username": "admin",
-# "password": "123"
-# }
+{
+"username": "admin",
+"password": "123"
+}
+
+###############################
 
 POST http://localhost:5000/login
 content-type: application/json
@@ -23,4 +25,3 @@ Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzQyNTA3
 
 # POST  http://localhost:5000/getrecdata
 
-POST  http://localhost:5000/getrecdata

@@ -13,7 +13,7 @@ const AuthForm = ({ handleLogin }) => {
                 username: usernameRef.current.value,
                 password: passwordRef.current.value
             }),
-            url: `http://${process.env.REACT_APP_URL}/login`,
+            url: `http://${process.env.REACT_APP_URL}/register`,
             headers: {
                 'Content-Type': 'application/json'
             },
