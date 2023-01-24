@@ -94,20 +94,6 @@ const editRecord = (req, res) => {
 const getRecData = (req, res) => {
     console.log('hit');
     const data = req.body
-    console.log({
-        Husband_name: data.Husband_name,
-        wife_name: data.wife_name,
-        phoneNumber: data.phoneNumber,
-        contract_type: data.contract_type,
-        address: data.address,
-        contract_date: data.contract_date,
-        contract_time: data.contract_time,
-        cost: data.cost,
-        moakhar: data.moakhar,
-        maazon_name: data.maazon_name,
-        envoy_name: data.envoy_name,
-        serial_number: data.serial_number
-    });
 
     const content = fs.readFileSync(
         path.resolve(__dirname, "./template.docx"),
