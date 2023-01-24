@@ -106,16 +106,17 @@ function App() {
 
   useEffect(() => {
     let isApiSubscribed = true;
-
-    request(httpSetup).then(data => {
-      const inf = data.data.data.slice()
-      inf.map((x, i) => {
-        x.s = i + 1
-        return x
+    if(token){
+      request(httpSetup).then(data => {
+        const inf = data.data.data.slice()
+        inf.map((x, i) => {
+          x.s = i + 1
+          return x
+        })
+        inf.forEach(x => x.data_register_date = x.data_register_date.slice(0, 10))
+        setData(inf)
       })
-      inf.forEach(x => x.data_register_date = x.data_register_date.slice(0, 10))
-      setData(inf)
-    })
+    }
     return () => {
       isApiSubscribed = false;
     }
