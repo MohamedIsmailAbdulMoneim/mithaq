@@ -58,6 +58,8 @@ margin-right: 10px
 const NewSeeMore = ({ data, inputs, token }) => {
     const { id } = useParams()
     const [memberDetails] = data.filter(x => x.id === parseInt(id))
+    Object.keys(memberDetails).forEach(x => memberDetails[x] === null ? memberDetails[x] = '' : memberDetails[x] = memberDetails[x])
+    
 
     const getRecData = () => {
         axios({

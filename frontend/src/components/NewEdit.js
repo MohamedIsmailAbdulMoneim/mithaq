@@ -125,10 +125,14 @@ const NewEdit = ({ data, inputs, status, additions, handleSubmit, contract_issue
                                                     <>
                                                         <Label>{z.headerName} :</Label>
                                                         <Select onChange={handleChange} name={z.field}>
+                                                            <option selected={true} id="0"></option>
                                                             {contract_type.map(x => (
+                                                                <>
+                                                                {console.log(editData[z.field], x.title)}
                                                                 <option selected={editData[z.field] === x.title ? true : false}>{x.title}</option>
+                                                                </>
                                                             ))}
-                                                            <option id="0"></option>
+                                                            
                                                         </Select>
                                                     </>
                                                     :
@@ -136,10 +140,11 @@ const NewEdit = ({ data, inputs, status, additions, handleSubmit, contract_issue
                                                         <>
                                                             <Label>{z.headerName} :</Label>
                                                             <Select onChange={handleChange} name={z.field}>
+                                                            <option selected={true} id="0"></option>
                                                                 {contract_issuer.map(x => (
                                                                     <option selected={editData[z.field] === x.title ? true : false}>{x.title}</option>
                                                                 ))}
-                                                                <option id="0"></option>
+                                                                
                                                             </Select>
                                                         </>
                                                         :
