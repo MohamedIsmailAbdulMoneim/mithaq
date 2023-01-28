@@ -92,9 +92,10 @@ const editRecord = (req, res) => {
 }
 
 const getRecData = (req, res) => {
-    console.log('hit');
     const data = req.body
 
+    data.contract_time = data.contract_time === "Invalid date" ? "" : data.contract_time
+console.log(data);
     const content = fs.readFileSync(
         path.resolve(__dirname, "./template.docx"),
         "binary"
@@ -107,18 +108,18 @@ const getRecData = (req, res) => {
     });
 
     doc.render({
-        Husband_name: data.Husband_name,
-        wife_name: data.wife_name,
-        phoneNumber: data.phoneNumber,
-        contract_type: data.contract_type,
-        address: data.address,
-        contract_date: data.contract_date,
-        contract_time: data.contract_time,
-        cost: data.cost,
-        moakhar: data.moakhar,
-        maazon_name: data.maazon_name,
-        envoy_name: data.envoy_name,
-        serial_number: data.serial_number
+        Husband_name: data.Husband_name || "",
+        wife_name: data.wife_name || "",
+        phoneNumber: data.phoneNumber || "",
+        contract_type: data.contract_type || "",
+        address: data.address || "",
+        contract_date: data.contract_date || "",
+        contract_time: data.contract_time || "",
+        cost: data.cost || "",
+        moakhar: data.moakhar || "",
+        maazon_name: data.maazon_name || "",
+        envoy_name: data.envoy_name || "",
+        serial_number: data.serial_number || ""
     });
     const buf = doc.getZip().generate({
         type: "nodebuffer",
@@ -131,7 +132,7 @@ const getRecData = (req, res) => {
     fs.writeFile(fileLocation, buf, (err) => {
         if (err) console.log(err);
 
-        res.download(fileLocation, '2.xlsx', (err) => {
+        res.download(fileLocation, 'البيانات.docx', (err) => {
             if (err) console.log(err);
         });
 

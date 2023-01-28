@@ -8,6 +8,7 @@ import { purple } from '@mui/material/colors';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import MultipleSelect from './Select';
+import moment from 'moment'
 import { Link, useParams } from 'react-router-dom';
 import download from 'js-file-download';
 import axios from 'axios';
@@ -59,8 +60,10 @@ const NewSeeMore = ({ data, inputs, token }) => {
     const { id } = useParams()
     const [memberDetails] = data.filter(x => x.id === parseInt(id))
     
+    
 
     const getRecData = () => {
+        memberDetails.contract_time = moment(memberDetails.contract_time, "HH:mm:ss").format("hh:mm A");
         axios({
             method: "POST",
             data: memberDetails,
@@ -71,7 +74,7 @@ const NewSeeMore = ({ data, inputs, token }) => {
                 "Authorization": `Bearer ${token}`
             },
         }).then(resp => {
-            download(resp.data, '2.docx');
+            download(resp.data, 'بيانات للطباعة.docx');
         });
     }
     return (
@@ -99,7 +102,6 @@ const NewSeeMore = ({ data, inputs, token }) => {
                                                 z.field === 'Additions' ?
 
                                                     <>
-                                                        {console.log(memberDetails[z.field])}
                                                         <Label>{z.headerName} :</Label>
                                                         <Input type='text' value={memberDetails[z.field]?.replaceAll(",", " - ").replaceAll("\"", "") || ''} name={z.field} label={z.headerName} />
                                                     </>

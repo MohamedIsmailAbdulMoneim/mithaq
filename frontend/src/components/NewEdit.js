@@ -193,7 +193,7 @@ const NewEdit = ({ data, inputs, status, additions, handleSubmit, contract_issue
             )}
             <Card dir="rtl" style={{ display: 'flex', flexDirection: 'column', width: '97%', alignItems: 'start', background: 'rgba(171, 120, 106, 0.89)', margin: '10px auto', borderRadius: 20 }}>
                 <label style={{ marginRight: 80 }}>ملاحظات :</label>
-                <textarea style={{ width: '95%', height: 150, margin: '10px auto', borderRadius: 15, padding: 5 }}></textarea>
+                <textarea onChange={handleChange} name='notes' style={{ width: '95%', height: 150, margin: '10px auto', borderRadius: 15, padding: 5 }}>{editData['notes'] || ''}</textarea>
             </Card>
             <Alert text={'تعديل البيانات'} style={{ width: '90%' }} open={open} handleSubmit={(e) => handleSubmit(e, editData, setOpen, setMsg, setSeverity, id)} severity={severity} msg={msg} handleClose={handleClose} />
         </>

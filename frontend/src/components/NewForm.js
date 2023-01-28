@@ -12,7 +12,7 @@ const Input = styled.input`
     width: 80%;
     margin-right: 10px;
     height: 20px;
-    border-radius: 10px;
+    border-radius: 5px;
     background: #ddc1b9e3;
     margin-bottom: 8px
 
@@ -24,7 +24,7 @@ width: 82%;
 margin-right: 10px;
 height: 25px;
 background: #ddc1b9e3;
-border-radius: 10px;
+border-radius: 5px;
 margin-bottom: 8px
 `
 
@@ -119,7 +119,7 @@ const NewForm = ({ inputs, status, additions, token, contract_type, contract_iss
                 <div dir='rtl' style={{ display: 'flex', background: 'transparent', justifyContent: 'space-evenly' }}>
                     {x.map(y => (
                         <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
-                            <Card style={{ display: 'flex', flexDirection: 'column', width: '90%', alignItems: 'start', background: 'rgba(171, 120, 106, 0.89)', margin: 10, borderRadius: 20 }}>
+                            <Card style={{ display: 'flex', flexDirection: 'column', width: '90%', alignItems: 'start', background: 'rgba(171, 120, 106, 0.89)', margin: 10, borderRadius: 10 }}>
                                 {y.map(z => (
                                     <Div>
 

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import { styled as style, alpha } from '@mui/material/styles';
+import styled from 'styled-components'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -22,6 +23,10 @@ import { StylesProvider, jssPreset } from '@mui/styles';
 import { Link } from 'react-router-dom';
 import { margin } from '@mui/system';
 
+const Button = styled.button`
+  background: #be2c2c33
+`
+
 // Configure JSS
 const jss = create({
   plugins: [...jssPreset().plugins, rtl()],
@@ -35,7 +40,7 @@ function RTL(props) {
 
 
 
-const Search = styled('div')(({ theme }) => ({
+const Search = style('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -51,7 +56,7 @@ const Search = styled('div')(({ theme }) => ({
   },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = style('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
   position: 'absolute',
@@ -61,7 +66,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = style(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
@@ -209,7 +214,7 @@ export default function PrimarySearchAppBar() {
               />
             </Search> */}
             <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            {/* <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 
               <IconButton
                 size="large"
@@ -217,7 +222,7 @@ export default function PrimarySearchAppBar() {
                 color="inherit"
               >
                 <Badge badgeContent={17} color="error">
-                  {/* <NotificationsIcon /> */}
+                  <NotificationsIcon />
                 
                 </Badge>
               </IconButton>
@@ -232,8 +237,8 @@ export default function PrimarySearchAppBar() {
               >
                 <AccountCircle />
               </IconButton>
-            </Box>
-            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            </Box> */}
+            {/* <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size="large"
                 aria-label="show more"
@@ -244,7 +249,8 @@ export default function PrimarySearchAppBar() {
               >
                 <MoreIcon />
               </IconButton>
-            </Box>
+            </Box> */}
+            {/* <Button>تسجيل خروج</Button> */}
           </Toolbar>
         </AppBar>
         {renderMobileMenu}
