@@ -5,7 +5,7 @@ const pool = require('mysql').createPool({
     timeout: 60 * 60 * 1000,
     host: "localhost",
     user: "root",
-    password: '',
+    password: process.env.dbpassword,
     database: "mithaq",
     multipleStatements: true,
     dateStrings: 'date',

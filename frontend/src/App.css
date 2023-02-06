@@ -1,5 +1,7 @@
 @import url(https://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
 
+
+
 body {
   background-image: linear-gradient(to bottom, rgba(15, 1, 1, 0.98), rgba(40, 15, 8, 0.89), rgba(18, 1, 1, 0.98)), url(./background.jpg);
   image-rendering: pixelated; 

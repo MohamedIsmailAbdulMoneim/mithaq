@@ -93,7 +93,7 @@ export const inputsData = [
             },
             {
                 field: 'address',
-                headerName: 'العنوان'
+                headerName: 'عنوان العروسة'
             }
         ]
     ]

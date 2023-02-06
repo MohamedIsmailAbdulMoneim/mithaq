@@ -95,7 +95,6 @@ const getRecData = (req, res) => {
     const data = req.body
 
     data.contract_time = data.contract_time === "Invalid date" ? "" : data.contract_time
-console.log(data);
     const content = fs.readFileSync(
         path.resolve(__dirname, "./template.docx"),
         "binary"
@@ -112,7 +111,7 @@ console.log(data);
         wife_name: data.wife_name || "",
         phoneNumber: data.phoneNumber || "",
         contract_type: data.contract_type || "",
-        address: data.address || "",
+        address: data.contract_place || "",
         contract_date: data.contract_date || "",
         contract_time: data.contract_time || "",
         cost: data.cost || "",

@@ -25,7 +25,6 @@ const Input = styled.input`
     margin-right: 10px;
     height: 20px;
     border-radius: 5px;
-    background: #ddc1b9e3;
     border-radius: 10px;
     margin-bottom: 8px
 
