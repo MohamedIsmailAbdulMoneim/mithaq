@@ -124,7 +124,7 @@ const getRecData = (req, res) => {
         type: "nodebuffer",
         // compression: DEFLATE adds a compression step.
         // For a 50MB output document, expect 500ms additional CPU time
-        compression: "DEFLATE",
+        compression: "DEFLATE"
     });
 
     fileLocation = path.resolve(__dirname, "./output.docx")
