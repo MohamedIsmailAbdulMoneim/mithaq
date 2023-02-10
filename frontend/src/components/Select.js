@@ -48,7 +48,7 @@ export default function MultipleSelect({ names, label, onChange, inputVal }) {
             height: 25,
             marginRight: 10,
             borderRadius: '10px',
-            background: '#ddc1b9e3',
+            background: '#fff',
             marginBottom: '8px'
             
           }}

@@ -82,7 +82,7 @@ const NewSeeMore = ({ data, inputs, token }) => {
                 <div dir='rtl' style={{ display: 'flex', background: 'transparent', justifyContent: 'space-evenly' }}>
                     {x.map(y => (
                         <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
-                            <Card style={{ display: 'flex', flexDirection: 'column', width: '90%', alignItems: 'start', background: 'rgba(171, 120, 106, 0.89)', margin: 10, borderRadius: 20 }}>
+                            <Card style={{ display: 'flex', flexDirection: 'column', width: '90%', alignItems: 'start', background: '#ebdcd8e3', margin: 10, borderRadius: 20 }}>
                                 {y.map(z => (
                                     <Div>
 
@@ -149,7 +149,7 @@ const NewSeeMore = ({ data, inputs, token }) => {
             )}
 
             {/* <button onClick={(e) => handleSubmit(e, setOpen, newData, phoneNums, setMsg, setSeverity, setNewData, setPhoneNums, setPhoneInputs)} style={{margin: '0 auto', width: '90%', height: 30}}>إدخال</button> */}
-            < Card dir="rtl" style={{ display: 'flex', flexDirection: 'column', width: '97%', alignItems: 'start', background: 'rgba(171, 120, 106, 0.89)', margin: '10px auto', borderRadius: 20 }
+            < Card dir="rtl" style={{ display: 'flex', flexDirection: 'column', width: '97%', alignItems: 'start', background: '#ebdcd8e3', margin: '10px auto', borderRadius: 20 }
             }>
                 <label style={{ marginRight: 80 }}>ملاحظات :</label>
                 <textarea style={{ width: '95%', height: 150, margin: '10px auto', borderRadius: 15, padding: 5 }}>{memberDetails.notes}</textarea>
