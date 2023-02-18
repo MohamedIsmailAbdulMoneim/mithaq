@@ -42,10 +42,10 @@ height: 30px;
 `
 
 const Circle = styled.div`
-width: 150px;
-height: 150px;
+width: 30%;
+height: 100px;
 background: rgb(132 83 91);
-border-radius: 200px;
+border-radius: 80%;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -145,7 +145,7 @@ const Search = ({ status, data, columns, contract_issuer, contract_type }) => {
           <SearchIcon />
         </button>
       </Div>
-      <div style={{ width: 500, display: 'flex', justifyContent: 'space-between', margin: '15px auto' }}>
+      <div style={{ width: "50%", display: 'flex', justifyContent: 'space-between', margin: '15px auto' }}>
         <Circle>
           <Link style={{ textDecoration: 'none' }} to='/fullsearch'>
             بحث شامل
