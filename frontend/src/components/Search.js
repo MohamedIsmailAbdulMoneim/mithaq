@@ -43,7 +43,7 @@ height: 30px;
 
 const Circle = styled.div`
 box-sizing: border-box;
-width: 30%;
+width: 40%;
 height: 100px;
 background: rgb(132 83 91);
 border-radius: 80%;
