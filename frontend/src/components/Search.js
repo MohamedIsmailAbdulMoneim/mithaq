@@ -24,18 +24,20 @@ box-sizing: border-box;
 `
 
 const FlexDisplay = styled.div`
+box-sizing: border-box;
+width: 100%;
 display: flex;
 justify-content: space-evenly;
 padding: 10px
-margin: 0
+
 `
 
 const Input = styled.input`
-width: 15em;
+width: 80%;
 height: 30px;
 `
 const Select = styled.select`
-width: 15em;
+width: 80%;
 height: 30px;
 `
 
@@ -99,18 +101,18 @@ const Search = ({ status, data, columns, contract_issuer, contract_type }) => {
         </DivHeading>
 
         <FlexDisplay>
-          <div>
-            <label style={{ display: 'block', textAlign: 'right' }}>تاريخ التسجيل</label>
+          <div style={{width: '50%'}}>
+            <label style={{ display: 'block'}}>تاريخ التسجيل</label>
             <Input placeholder='الشهر - السنة' onChange={filterDataHandler} name="data_register_date" />
           </div>
-          <div>
-            <label style={{ display: 'block', textAlign: 'right', }}>تاريخ العقد</label>
+          <div style={{width: '50%'}}>
+            <label style={{ display: 'block'}}>تاريخ العقد</label>
             <Input placeholder='الشهر - السنة' onChange={filterDataHandler} name="contract_date" />
           </div>
         </FlexDisplay>
         <FlexDisplay>
-          <div>
-            <label style={{ display: 'block', textAlign: 'right' }}>نوع العقد</label>
+          <div style={{width: '50%'}}>
+            <label style={{ display: 'block' }}>نوع العقد</label>
             <Select name={'contract_type'} onChange={filterDataHandler} >
               {contract_type.map(x => (
                 <option>{x.title}</option>
@@ -118,8 +120,8 @@ const Search = ({ status, data, columns, contract_issuer, contract_type }) => {
               <option id="0" selected></option>
             </Select>
           </div>
-          <div>
-            <label style={{ display: 'block', textAlign: 'right', }}>جهة العقد</label>
+          <div style={{width: '50%'}}>
+            <label style={{ display: 'block' }}>جهة العقد</label>
             <Select name={'contract_issuer'} onChange={filterDataHandler} >
               {contract_issuer.map(x => (
                 <option>{x.title}</option>
@@ -129,9 +131,9 @@ const Search = ({ status, data, columns, contract_issuer, contract_type }) => {
           </div>
         </FlexDisplay>
         <FlexDisplay>
-          <div>
-            <label style={{ display: 'block', textAlign: 'right', }}>الحالة</label>
-            <select onChange={filterDataHandler} name="status" style={{ width: "20em", height: 35 }}>
+          <div style={{width: '100%'}}>
+            <label style={{ display: 'block' }}>الحالة</label>
+            <select onChange={filterDataHandler} name="status" style={{ width: "70%", height: 35 }}>
               {status.map(s => (
                 <option key={s.id} id={s.id}>{s.title}</option>
               ))}
