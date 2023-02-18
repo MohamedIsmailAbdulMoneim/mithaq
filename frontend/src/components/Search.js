@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material'
+// import { TextField } from '@mui/material'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import SearchIcon from '@mui/icons-material/Search';
@@ -31,11 +31,11 @@ margin: 0
 `
 
 const Input = styled.input`
-width: 220px;
+width: 15em;
 height: 30px;
 `
 const Select = styled.select`
-width: 219px;
+width: 15em;
 height: 30px;
 `
 
@@ -131,7 +131,7 @@ const Search = ({ status, data, columns, contract_issuer, contract_type }) => {
         <FlexDisplay>
           <div>
             <label style={{ display: 'block', textAlign: 'right', }}>الحالة</label>
-            <select onChange={filterDataHandler} name="status" style={{ width: 280, height: 35 }}>
+            <select onChange={filterDataHandler} name="status" style={{ width: "20em", height: 35 }}>
               {status.map(s => (
                 <option key={s.id} id={s.id}>{s.title}</option>
               ))}
