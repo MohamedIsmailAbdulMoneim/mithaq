@@ -8,7 +8,7 @@ import Table from './Table';
 
 const Div = styled.div`
 margin: 0 auto;
-width: 55%;
+width: 70%;
 background: rgba(235, 220, 216, 0.89);
 box-sizing: border-box;
 padding-bottom: 10px
