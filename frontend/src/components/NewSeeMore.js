@@ -58,8 +58,8 @@ margin-right: 10px
 const NewSeeMore = ({ data, inputs, token }) => {
     const { id } = useParams()
     const [memberDetails] = data.filter(x => x.id === parseInt(id))
-    
-    
+
+
 
     const getRecData = () => {
         memberDetails.contract_time = moment(memberDetails.contract_time, "HH:mm:ss").format("hh:mm A");
@@ -78,6 +78,18 @@ const NewSeeMore = ({ data, inputs, token }) => {
     }
     return (
         <>
+            <div style={{textAlign: 'right', paddingRight: 50, color: "#fff", display: "flex", justifyContent: "flex-end"}}>
+            <span style={{marginRight: 5, textTransform: "uppercase", letterSpacing: 2}}>{memberDetails.created_by}</span>
+            <p style={{padding: 0, margin: 0}}>تم إدخال البيانات بواسطة</p>
+            </div>
+            {memberDetails.edited_by.length > 0 
+            &&
+            <div style={{textAlign: 'right', paddingRight: 50, color: "#fff", display: "flex", justifyContent: "flex-end"}}>
+            <span style={{marginRight: 5, textTransform: "uppercase", letterSpacing: 2}}>{memberDetails.edited_by}</span>
+            <p style={{padding: 0, margin: 0}}>تم التعديل بواسطة</p>
+            </div>
+            }
+
             {inputs.map(x => (
                 <div dir='rtl' style={{ display: 'flex', background: 'transparent', justifyContent: 'space-evenly' }}>
                     {x.map(y => (

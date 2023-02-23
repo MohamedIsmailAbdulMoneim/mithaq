@@ -51,11 +51,12 @@ const Label = styled.label`
 margin-right: 10px
 `
 
-const NewEdit = ({ data, inputs, status, additions, handleSubmit, contract_issuer, contract_type }) => {
+const NewEdit = ({ user, data, inputs, status, additions, handleSubmit, contract_issuer, contract_type }) => {
     const { id } = useParams()
     const [memberDetails] = data.map(x => {
         return { ...x, Additions: x.Additions?.split(',') }
     }).filter(x => x.id === parseInt(id))
+    memberDetails.edited_by = user;
 
     const [editData, setEditData] = useState(memberDetails)
     const [open, setOpen] = useState(false);

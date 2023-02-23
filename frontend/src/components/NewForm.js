@@ -36,8 +36,8 @@ const Label = styled.label`
 margin-right: 10px
 `
 
-const NewForm = ({ inputs, status, additions, token, contract_type, contract_issuer }) => {
-    const [newData, setNewData] = useState({ Additions: [] })
+const NewForm = ({ user, inputs, status, additions, token, contract_type, contract_issuer }) => {
+    const [newData, setNewData] = useState({ Additions: [], created_by: user })
     const [open, setOpen] = useState(false);
     const [msg, setMsg] = useState('')
     const [severity, setSeverity] = useState('')

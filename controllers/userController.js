@@ -69,7 +69,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
 
       res.json({
-        username: username,
+        username,
         token: generateToken(rows[0].insertId),
       })
 

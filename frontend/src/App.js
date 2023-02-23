@@ -15,6 +15,8 @@ import useHttp from './components/hooks/useHttp';
 function App() {
   const [data, setData] = useState([])
   const [token, setToken] = useState(localStorage.getItem('tkn'))
+  const [user, setUser] = useState(localStorage.getItem('user'));
+  console.log(user);
 
   const httpSetup = {
     method: "GET",
@@ -54,8 +56,11 @@ function App() {
   const handleLogin = (data) => {
 
     request(data).then(data => {
+      
       localStorage.setItem('tkn', data.data.token)
+      localStorage.setItem('user', data.data.username)
       setToken(data.data.token)
+      setUser(data.data.username)
     }).catch(err => {
       console.log(err);
     })
@@ -139,12 +144,12 @@ function App() {
             <>
 
               <Route base path='/' element={<Search columns={columns} data={data} status={status} contract_issuer={contract_issuer} contract_type={contract_type} />} />
-              <Route path='/form' element={<NewForm token={token} inputs={inputsData} status={status} additions={additions} contract_issuer={contract_issuer} contract_type={contract_type} />} />
+              <Route path='/form' element={<NewForm user={user} token={token} inputs={inputsData} status={status} additions={additions} contract_issuer={contract_issuer} contract_type={contract_type} />} />
               <Route path='/fullsearch' element={<FullSearch data={data} columns={columns} inputs={inputsData} status={status} additions={additions} contract_issuer={contract_issuer} contract_type={contract_type}  />} />
               {data.length > 0 &&
                 <>
                   <Route path='/nseemore/:id' element={<NewSeeMore inputs={inputsData} data={data} token={token} />} />
-                  <Route path='/nedit/:id' element={<NewEdit handleSubmit={handleSubmitEdit} inputs={inputsData} data={data} status={status} additions={additions} contract_issuer={contract_issuer} contract_type={contract_type} />} />
+                  <Route path='/nedit/:id' element={<NewEdit user={user} handleSubmit={handleSubmitEdit} inputs={inputsData} data={data} status={status} additions={additions} contract_issuer={contract_issuer} contract_type={contract_type} />} />
 
                 </>
               }
