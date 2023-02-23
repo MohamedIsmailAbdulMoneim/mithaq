@@ -82,7 +82,7 @@ const NewSeeMore = ({ data, inputs, token }) => {
             <span style={{marginRight: 5, textTransform: "uppercase", letterSpacing: 2}}>{memberDetails.created_by}</span>
             <p style={{padding: 0, margin: 0}}>تم إدخال البيانات بواسطة</p>
             </div>
-            {memberDetails.edited_by.length > 0 
+            {memberDetails.edited_by?.length > 0 
             &&
             <div style={{textAlign: 'right', paddingRight: 50, color: "#fff", display: "flex", justifyContent: "flex-end"}}>
             <span style={{marginRight: 5, textTransform: "uppercase", letterSpacing: 2}}>{memberDetails.edited_by}</span>
