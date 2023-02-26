@@ -261,7 +261,8 @@ export default function PrimarySearchAppBar({user, logoutHandler}) {
               </IconButton>
             </Box> */}
             {user === "methaqfamily" && <Link to={'/register'}><Button>مستخدم جديد</Button></Link>}
-            <Button onClick={logoutHandler}>تسجيل خروج</Button>
+            {user && <Button onClick={logoutHandler}>تسجيل خروج</Button>}
+            
           </Toolbar>
         </AppBar>
         {renderMobileMenu}
