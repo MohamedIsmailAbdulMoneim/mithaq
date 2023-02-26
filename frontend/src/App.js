@@ -78,6 +78,9 @@ const logoutHandler = (e) => {
   setUser('')
   localStorage.removeItem("tkn");
   localStorage.removeItem("user")
+  setInterval(() => {
+    window.location.href = `http://methaq-family.com`;
+  }, 0);
 }
 
   
