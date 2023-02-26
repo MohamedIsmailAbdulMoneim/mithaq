@@ -177,7 +177,7 @@ const logoutHandler = (e) => {
 
             :
             <>
-              <Route base path='/' element={<Login handleLogin={handleAuth} />} />
+              <Route  path='*' element={<Login handleLogin={handleAuth} />} />
 
 
             </>
