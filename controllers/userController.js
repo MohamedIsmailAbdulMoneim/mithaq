@@ -33,9 +33,10 @@ const registerUser = asyncHandler( (req, res) => {
           // throw new Error('Invalid user data')
         } else {
           res.status(201).json({
+            msg: "user created successfuly",
             id: rows.insertId,
             username: username,
-            token: generateToken(rows.insertId),
+            token: generateToken(rows.insertId, username),
           })
         }
       })
@@ -67,10 +68,9 @@ const loginUser = asyncHandler(async (req, res) => {
 
     else if (rows.length && (await bcrypt.compare(password, rows[0].password))) {
 
-
       res.json({
         username,
-        token: generateToken(rows[0].insertId),
+        token: generateToken(rows[0].id, username),
       })
 
 
@@ -87,8 +87,8 @@ const getMe = asyncHandler(async (req, res) => {
 })
 
 // Generate JWT
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
+const generateToken = (id, user) => {
+  return jwt.sign({ id, user }, process.env.JWT_SECRET, {
     expiresIn: '30d',
   })
 }

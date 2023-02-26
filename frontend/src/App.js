@@ -10,7 +10,9 @@ import NewSeeMore from './components/NewSeeMore';
 import NewEdit from './components/NewEdit';
 import FullSearch from './components/FullSearch'
 import Login from './components/Login';
+import Register from './components/Register';
 import useHttp from './components/hooks/useHttp';
+
 
 function App() {
   const [data, setData] = useState([])
@@ -21,7 +23,10 @@ function App() {
   const httpSetup = {
     method: "GET",
     url: `http://${process.env.REACT_APP_URL}/getallrecords`,
-    headers: { "Authorization": `Bearer ${token}` },
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "username": user
+    },
   }
   console.log(httpSetup);
   console.log(data)
@@ -53,18 +58,29 @@ function App() {
     { id: 3, title: 'شهادة صحية' }
   ]
 
-  const handleLogin = (data) => {
+  const handleAuth = (data) => {
 
     request(data).then(data => {
-      
-      localStorage.setItem('tkn', data.data.token)
-      localStorage.setItem('user', data.data.username)
-      setToken(data.data.token)
-      setUser(data.data.username)
+
+        localStorage.setItem('tkn', data.data.token)
+        localStorage.setItem('user', data.data.username)
+        setToken(data.data.token)
+        setUser(data.data.username)
     }).catch(err => {
-      console.log(err);
+        console.log(err);
     })
-  }
+
+}
+
+
+const logoutHandler = (e) => {
+  setToken('')
+  setUser('')
+  localStorage.removeItem("tkn");
+  localStorage.removeItem("user")
+}
+
+  
 
 
 
@@ -84,7 +100,8 @@ function App() {
         url: `http://${process.env.REACT_APP_URL}/editrecord`,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          "Authorization": `Bearer ${token}`,
+          "username": user
         },
       }).then(data => {
         if (data.data.msg === 'تم إدخال البيانات بنجاح') {
@@ -92,7 +109,7 @@ function App() {
           setSeverity('success')
           console.log(data);
           const interval = setInterval(() => {
-          window.location.href = `http://methaq-family.com/nseemore/${id}`;
+            window.location.href = `http://methaq-family.com/nseemore/${id}`;
           }, 3000);
         }
         else {
@@ -111,7 +128,7 @@ function App() {
 
   useEffect(() => {
     let isApiSubscribed = true;
-    if(token){
+    if (token) {
       request(httpSetup).then(data => {
         const inf = data.data.data.slice()
         inf.map((x, i) => {
@@ -137,7 +154,7 @@ function App() {
     <BrowserRouter >
       <div className="App" style={{ background: 'transparent' }}>
 
-        <Header />
+        <Header user={user} logoutHandler={logoutHandler} />
 
         <Routes>
           {token ?
@@ -145,7 +162,7 @@ function App() {
 
               <Route base path='/' element={<Search columns={columns} data={data} status={status} contract_issuer={contract_issuer} contract_type={contract_type} />} />
               <Route path='/form' element={<NewForm user={user} token={token} inputs={inputsData} status={status} additions={additions} contract_issuer={contract_issuer} contract_type={contract_type} />} />
-              <Route path='/fullsearch' element={<FullSearch data={data} columns={columns} inputs={inputsData} status={status} additions={additions} contract_issuer={contract_issuer} contract_type={contract_type}  />} />
+              <Route path='/fullsearch' element={<FullSearch data={data} columns={columns} inputs={inputsData} status={status} additions={additions} contract_issuer={contract_issuer} contract_type={contract_type} />} />
               {data.length > 0 &&
                 <>
                   <Route path='/nseemore/:id' element={<NewSeeMore inputs={inputsData} data={data} token={token} />} />
@@ -153,10 +170,17 @@ function App() {
 
                 </>
               }
+              <Route path='/register' element={<Register useHttp={useHttp} />} />
+
             </>
 
             :
-            <Route base path='/' element={<Login handleLogin={handleLogin} />} />
+            <>
+              <Route path='/' element={<Login handleLogin={handleAuth} />} />
+
+
+            </>
+
           }
         </Routes>
       </div>

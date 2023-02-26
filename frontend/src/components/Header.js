@@ -24,7 +24,16 @@ import { Link } from 'react-router-dom';
 import { margin } from '@mui/system';
 
 const Button = styled.button`
-  background: #be2c2c33
+background: inherit;
+border: none;
+color: #f0e4b6;
+width: 120px;
+padding: 5px 10px;
+font-family: 'Droid Arabic Kufi', serif;
+border: 0.1px solid #4e4e4e;
+border-radius: 5px;
+margin-right: 5px;
+cursor: pointer
 `
 
 // Configure JSS
@@ -80,7 +89,8 @@ const StyledInputBase = style(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar({user, logoutHandler}) {
+  console.log(user);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -193,16 +203,16 @@ export default function PrimarySearchAppBar() {
             >
               <MenuIcon />
             </IconButton> */}
-            
+
             <Typography
               variant="h6"
               noWrap
               component="div"
               sx={{ display: { xs: 'none', sm: 'block' } }}
-              
-              
+
+
             >
-              <Link style={{margin: '0 auto'}} to='/'><img src={logo} alt="logo" style={{ width: 50, height: 50, position: 'absolute', top: '5%', right: '50%' }} /></Link>
+              <Link style={{ margin: '0 auto' }} to='/'><img src={logo} alt="logo" style={{ width: 50, height: 50, position: 'absolute', top: '5%', right: '50%' }} /></Link>
             </Typography>
             {/* <Search >
               <SearchIconWrapper>
@@ -250,7 +260,8 @@ export default function PrimarySearchAppBar() {
                 <MoreIcon />
               </IconButton>
             </Box> */}
-            {/* <Button>تسجيل خروج</Button> */}
+            {user === "methaqfamily" && <Link to={'/register'}><Button>مستخدم جديد</Button></Link>}
+            <Button onClick={logoutHandler}>تسجيل خروج</Button>
           </Toolbar>
         </AppBar>
         {renderMobileMenu}

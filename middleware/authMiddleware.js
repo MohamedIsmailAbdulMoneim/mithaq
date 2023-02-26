@@ -16,10 +16,9 @@ const protect = asyncHandler(async (req, res, next) => {
 
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      if(decoded.user !== req.headers.username)
+        throw new Error('data was manibulated')
       // Get user from the token
-      db.query(`select username from users where id = "${decoded.id}"`, function (err, rows) {
-        // req.user = rows[0].id
-      })
 
       next()
     } catch (error) {

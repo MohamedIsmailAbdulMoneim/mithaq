@@ -50,7 +50,8 @@ const NewForm = ({ user, inputs, status, additions, token, contract_type, contra
         url: `http://${process.env.REACT_APP_URL}/addrecord`,
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token}`,
+            "username": user
         },
     }
 
