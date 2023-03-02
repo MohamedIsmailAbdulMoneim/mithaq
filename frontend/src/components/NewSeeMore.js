@@ -56,6 +56,7 @@ margin-right: 10px
 `
 
 const NewSeeMore = ({ data, inputs, token, user }) => {
+    console.log(user);
     const { id } = useParams()
     const [memberDetails] = data.filter(x => x.id === parseInt(id))
 
@@ -71,7 +72,7 @@ const NewSeeMore = ({ data, inputs, token, user }) => {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`,
-                "user": user
+                "username": user
             },
         }).then(resp => {
             download(resp.data, 'بيانات للطباعة.docx');
