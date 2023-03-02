@@ -55,7 +55,7 @@ const Label = styled.label`
 margin-right: 10px
 `
 
-const NewSeeMore = ({ data, inputs, token }) => {
+const NewSeeMore = ({ data, inputs, token, user }) => {
     const { id } = useParams()
     const [memberDetails] = data.filter(x => x.id === parseInt(id))
 
@@ -70,7 +70,8 @@ const NewSeeMore = ({ data, inputs, token }) => {
             responseType: 'arraybuffer',
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token}`,
+                "user": user
             },
         }).then(resp => {
             download(resp.data, 'بيانات للطباعة.docx');

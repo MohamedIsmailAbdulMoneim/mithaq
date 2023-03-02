@@ -166,7 +166,7 @@ const logoutHandler = (e) => {
               <Route path='/fullsearch' element={<FullSearch data={data} columns={columns} inputs={inputsData} status={status} additions={additions} contract_issuer={contract_issuer} contract_type={contract_type} />} />
               {data.length > 0 &&
                 <>
-                  <Route path='/nseemore/:id' element={<NewSeeMore inputs={inputsData} data={data} token={token} />} />
+                  <Route path='/nseemore/:id' element={<NewSeeMore inputs={inputsData} data={data} token={token} user={user} />} />
                   <Route path='/nedit/:id' element={<NewEdit user={user} handleSubmit={handleSubmitEdit} inputs={inputsData} data={data} status={status} additions={additions} contract_issuer={contract_issuer} contract_type={contract_type} />} />
 
                 </>
