@@ -31,10 +31,10 @@ export default function PrimarySearchAppBar({ user, logoutHandler }) {
       </div>
       <Link className='' style={{ flexGrow: 1 }} to='/'><img src={logo} alt="logo" style={{ maxWidth: 50, maxHeight: 50 }} /></Link>
       <div style={{ lineHeight: 3, textTransform: "uppercase", color: "#f0e4b6", flexGrow: 1, display: "flex", justifyContent: "end" }}>
-        <span style={{ marginRight: 5 }}>
+        <span style={{ marginRight: 4 }}>
           {user}
         </span>
-        مرحبا يا
+        مرحبا
       </div>
     </div>
 
