@@ -24,7 +24,7 @@ padding: 5px 10px;
 font-family: 'Droid Arabic Kufi', serif;
 border: 0.1px solid #4e4e4e;
 border-radius: 5px;
-margin-right: 0.5%;
+margin-right: 5px;
 cursor: pointer
 `
 
