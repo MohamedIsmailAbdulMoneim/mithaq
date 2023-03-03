@@ -26,7 +26,7 @@ export default function PrimarySearchAppBar({ user, logoutHandler }) {
       <div style={{ flexGrow: 1, display: "flex", justifyContent: "start", alignItems: "center" }}>
         {/* {user === "methaqfamily" && <Link to={'/register'}><Button>مستخدم جديد</Button></Link>} */}
         {/* { <Link style={{}} to={'/register'}><Button>مستخدم جديد</Button></Link>} */}
-        <Button><Link className={style.link} to={'/register'}>مستخدم جديد</Link></Button>
+        {user === "methaqfamily" && <Button><Link className={style.link} to={'/register'}>مستخدم جديد</Link></Button>}
         {user && <Button onClick={logoutHandler}>تسجيل خروج</Button>}
       </div>
       <Link className='' style={{ flexGrow: 1 }} to='/'><img src={logo} alt="logo" style={{ maxWidth: 50, maxHeight: 50 }} /></Link>
