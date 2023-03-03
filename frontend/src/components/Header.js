@@ -182,10 +182,10 @@ export default function PrimarySearchAppBar({ user, logoutHandler }) {
 
   return (
     <div style={{ background: "#310109", color: 'white', width: "100%", maxHeight: 64, marginBottom: 20, padding: 10, display: "flex", justifyContent: "space-between" }}>
-
-      {user === "methaqfamily" && <Link to={'/register'}><Button>مستخدم جديد</Button></Link>}
-      {user && <Button onClick={logoutHandler}>تسجيل خروج</Button>}
-
+      <div>
+        {user === "methaqfamily" && <Link to={'/register'}><Button>مستخدم جديد</Button></Link>}
+        {user && <Button onClick={logoutHandler}>تسجيل خروج</Button>}
+      </div>
       <Link to='/'><img src={logo} alt="logo" style={{ maxWidth: 50, maxHeight: 50 }} /></Link>
       <div style={{ lineHeight: 3, textTransform: "uppercase", color: "#f0e4b6" }}>
         <span style={{ marginRight: 5 }}>
