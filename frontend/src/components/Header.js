@@ -19,12 +19,12 @@ const Button = styled.button`
 background: inherit;
 border: none;
 color: #f0e4b6;
-width: 120px;
+width: 100%;
 padding: 5px 10px;
 font-family: 'Droid Arabic Kufi', serif;
 border: 0.1px solid #4e4e4e;
 border-radius: 5px;
-margin-right: 5px;
+margin-right: 0.5%;
 cursor: pointer
 `
 
