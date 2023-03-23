@@ -30,7 +30,7 @@ const getAllRecords = (req, res) => {
     SELECT m.id, m.serial_number, m.contract_date, m.contract_time, m.contract_place, m.address,
     m.Husband_name, m.wife_name, m.wife_custodian, m.moakhar, m.Additions, m.cost, m.contract_type, m.contract_issuer,
     m.data_register_date, m.maazon_name, m.envoy_name, m.status, m.notes, m.phoneNumber, m.created_by, m.edited_by
-    FROM main m order BY id DESC
+    FROM main m order BY m.contract_date DESC
     `
     db.query(query, (err, details) => {
         if (err) {
